@@ -21,7 +21,7 @@ We will learn three things:
 \section{Splitting Programs over Files}\label{SEC.L12.SPLITTING.PROGRAMS}
 
 By this stage you have written lots of programs that use the
-predicates §append/3§ and §member/2§. What you probably did each time
+predicates "append/3" and "member/2". What you probably did each time
 you needed one of them was to go back to the definition and copy it
 over to the file where you wanted to use it. And maybe, after having
 done that a few times, you started thinking that it was quite annoying
@@ -53,22 +53,22 @@ to be performed interactively. If you put
 \begin{LPNcodedisplay}
 :- [FileName1,FileName2,...,FileNameN].
 \end{LPNcodedisplay}
-at the top of your program file (say §main.pl§) you are telling Prolog
+at the top of your program file (say "main.pl") you are telling Prolog
 to first consult the listed files before going on to read in the rest
 of your program.
 
 
 This feature gives us a simple way of re-using definitions.  For
 example, suppose that you keep all the predicate definitions for basic
-list processing (such as §append/3§, §member/2§, §reverse/2§, and so
-on) in a file called §listPredicates.pl§. If you want to use them,
+list processing (such as "append/3", "member/2", "reverse/2", and so
+on) in a file called "listPredicates.pl". If you want to use them,
 simply put
 \begin{LPNcodedisplay}
 :- [listPredicates].
 \end{LPNcodedisplay}
 at the top of the file  containing the program that needs
-them. Prolog will consult §listPredicates§ when reading in that file,
-and all the predicate definitions in §listPredicates§ become
+them. Prolog will consult "listPredicates" when reading in that file,
+and all the predicate definitions in "listPredicates" become
 available.
 
 There's one practical point you should be aware of. When Prolog loads
@@ -80,13 +80,13 @@ need to. This can be annoying if you are consulting very large
 files.
 
 The built-in predicate
-§ensure_loaded/1§ behaves more intelligently  in this respect.  It
+"ensure_loaded/1" behaves more intelligently  in this respect.  It
 works as follows. On encountering the following
 directive\index{PROLOG ensure_loaded/1@\texttt{ensure\_loaded/1}}
 \begin{LPNcodedisplay}
 :- ensure_loaded([listPredicates]).
 \end{LPNcodedisplay}
-Prolog checks whether the file §listPredicates.pl§ has already been
+Prolog checks whether the file "listPredicates.pl" has already been
 loaded and only loads it again if it has changed since the last
 loading.
 
@@ -96,12 +96,12 @@ loading.
 \subsection*{Modules}\label{SUBSEC.L12.MODULES}
 
 Now imagine that you are writing a program that manages a movie
-database. You have designed a predicate §printActors§ which displays
+database. You have designed a predicate "printActors" which displays
 all actors starring in a particular film, and a predicate
-§printMovies§ which displays all movies directed by a particular
+"printMovies" which displays all movies directed by a particular
 filmmaker. Both definitions are stored in different files, namely
-§printActors.pl§ and §printMovies.pl§, and both use an auxiliary
-predicate §displayList/1§. Here's the first file:
+"printActors.pl" and "printMovies.pl", and both use an auxiliary
+predicate "displayList/1". Here's the first file:
 
 \begin{LPNcodedisplay}
 % This is the file: printActors.pl
@@ -129,9 +129,9 @@ displayList([X|L]):-
    displayList(L).
 \end{LPNcodedisplay}
 
-Note that §displayList/1§ has different definitions in the two files:
-the actors are printed in a row (using §tab/1§)\index{PROLOG tab/1@\texttt{tab/1}}, and the films are printed in a column (using
-§nl/0§)\index{PROLOG nl/0@\texttt{nl/0}}.
+Note that "displayList/1" has different definitions in the two files:
+the actors are printed in a row (using "tab/1")\index{PROLOG tab/1@\texttt{tab/1}}, and the films are printed in a column (using
+"nl/0")\index{PROLOG nl/0@\texttt{nl/0}}.
 Will this lead to conflicts in Prolog? Let's see. We'll
 load both programs by placing the statements
 
@@ -157,8 +157,8 @@ The procedure displayList/1 is being redefined.
 Do you really want to redefine it? (y, n, p, or ?)
 \end{LPNcodedisplay}
 
-What has happened? Well, as both files §printActors.pl§
-and §printMovies.pl§  define a predicate called §displayList/1§, Prolog
+What has happened? Well, as both files "printActors.pl"
+and "printMovies.pl"  define a predicate called "displayList/1", Prolog
 needs to choose one of the two definitions (it can't have two different
 definitions for one predicate in its knowledge base).
 
@@ -180,9 +180,9 @@ and which predicates should be \LPNterm{private} (that is, callable
 only from within the module itself).  Thus you will not be able to
 call private predicates from outside the module in which they are
 defined, but there will be no conflicts if two modules internally
-define the same predicate. In our example,  §displayList/1§ is a good
+define the same predicate. In our example,  "displayList/1" is a good
 candidate for becoming a private predicate; it plays a simple
-auxiliary role in  both §printActors/1§ and  §printMovies/1,§
+auxiliary role in  both "printActors/1" and  "printMovies/1,"
 and the  details of the
 role it plays for one predicate are not relevant to the other.
 
@@ -215,10 +215,10 @@ displayList([X|L]):-
    write(X), tab(1),
    displayList(L).
 \end{LPNcodedisplay}
-Here we have introduced a module called §printActors§,
-with one public predicate §printActors/1§. The predicate
-§displayList/1§ is only known in the scope of the module
-§printActors§, so its definition won't affect any other
+Here we have introduced a module called "printActors",
+with one public predicate "printActors/1". The predicate
+"displayList/1" is only known in the scope of the module
+"printActors", so its definition won't affect any other
 modules.
 
 Likewise we can turn the second file into a module:
@@ -238,11 +238,11 @@ displayList([X|L]):-
    displayList(L).
 \end{LPNcodedisplay}
 Again, the  definition of the
-§displayList/1§ is only known in the scope of the module
-§printMovies§, so there won't be any
+"displayList/1" is only known in the scope of the module
+"printMovies", so there won't be any
 clash when loading both modules at the same time.
 
-Modules can be loaded with the built-in predicates §use_module/1§.
+Modules can be loaded with the built-in predicates "use_module/1".
 This will \LPNterm{import} all predicates that were defined as public
 by the module. In other words, all public predicates will be\index{PROLOG use_module/1@\texttt{use\_module/1}}
 accessible. To do this we need to change the main file as follows:
@@ -255,7 +255,7 @@ accessible. To do this we need to change the main file as follows:
 \end{LPNcodedisplay}
 
 If you don't want to use all public predicates of a module, but only
-some of them, you can use the two-place version of §use_module§, which
+some of them, you can use the two-place version of "use_module", which
 takes a list of predicates that you actually want to import as its
 \index{PROLOG use_module/2@\texttt{use\_module/2}} second argument.
 So, by putting
@@ -267,7 +267,7 @@ So, by putting
 :- use_module(printMovies,[printMovies/1]).
 \end{LPNcodedisplay}
 at the top of the main file, we have explicitly stated that we
-can use §printActors/1§ and §printMovies/1§, and nothing else (in this
+can use "printActors/1" and "printMovies/1", and nothing else (in this
 case, of course, the declaration is unnecessary as there are no other
 public predicates that we could use).  Needless to say, you can only
 import predicates that are actually exported by the relevant module.
@@ -279,7 +279,7 @@ import predicates that are actually exported by the relevant module.
 Many of the most common predicates are provided predefined, in one way
 or another, by most Prolog implementations.  If you have been using
 SWI Prolog, for example, you will probably have noticed that
-predicates like §append/3§ and §member/2§ come as part of the
+predicates like "append/3" and "member/2" come as part of the
 system. That's a speciality of SWI, however. Other Prolog
 implementations, like SICStus for example, don't have them built-in,
 but  provide them as part of a \LPNterm{library}.
@@ -295,7 +295,7 @@ For example, putting the directive
 :- use_module(library(lists)).
 \end{LPNcodedisplay}
 at the top of your file tells Prolog to load a
-library called §lists§. In SICStus Prolog, this library contains a set of
+library called "lists". In SICStus Prolog, this library contains a set of
 commonly used list processing predicates.
 
 Libraries can be very useful and they can save you a lot of
@@ -322,13 +322,13 @@ In order to write to a file we have to create one (or open an existing
 one) and associate a \LPNterm{stream} with it. You can think of streams
 as connections to files. In Prolog, streams are blessed with names in
 a rather user-unfriendly format, such as
-§'\$stream'(183368)§. Luckily, you never have to bother about the
+"'\$stream'(183368)". Luckily, you never have to bother about the
 exact names of streams --- although Prolog assigns these names
 internally, you can use Prolog's unification to match the name to a
 variable and make use of the variable rather than the name of the
 stream itself.
 
-Say you want to print the string 'Hogwarts' to the file §hogwarts.txt§.
+Say you want to print the string 'Hogwarts' to the file "hogwarts.txt".
 This is done as follows:
 \index{PROLOG open/3@\texttt{open/3}}
 \index{PROLOG write/2@\texttt{write/2}}
@@ -343,25 +343,25 @@ This is done as follows:
    ...
 \end{LPNcodedisplay}
 
-What's happening here? Well, first the built-in predicate §open/3§ is
-used to create the file §hogwarts.txt§. The second argument of
-§open/3§ indicates that we want to \LPNterm{open} a new file
+What's happening here? Well, first the built-in predicate "open/3" is
+used to create the file "hogwarts.txt". The second argument of
+"open/3" indicates that we want to \LPNterm{open} a new file
 (overwriting any existing file with the same name). The third argument
-of §open/3§ returns the name of the stream. Secondly, we
+of "open/3" returns the name of the stream. Secondly, we
 \LPNterm{write} 'Hogwarts' on the stream and issue a newline command as
 well. After this we are ready, and \LPNterm{close} the stream, using
-the built-in §close/1§.
+the built-in "close/1".
 
 And that's more or less all there is to it.  As promised, we were not
-interested in the name of the stream --- we used the variable §Stream§
-to pass it around. Also note that the §write/2§ predicate we used here
-is basically a more general form of the §write/1§ predicates we used
+interested in the name of the stream --- we used the variable "Stream"
+to pass it around. Also note that the "write/2" predicate we used here
+is basically a more general form of the "write/1" predicates we used
 in Chapter~\ref{CHAPTER9} for writing to the screen.
 
 What if you don't want to overwrite an existing file but
 \LPNterm{append} to an existing one? This is done by choosing a
-different mode when opening the file: instead of §write§, use §append§
-as value for the second argument of §open/3§.  If a file of the
+different mode when opening the file: instead of "write", use "append"
+as value for the second argument of "open/3".  If a file of the
 given name doesn't exist, it will be created.
 
 
@@ -374,7 +374,7 @@ given name doesn't exist, it will be created.
 In this section we show how to read from files.  Reading information
 from files is straightforward in Prolog --- or at least, it is if this
 information is given in the form of Prolog terms followed
-by full stops. Consider the file §houses.txt§:
+by full stops. Consider the file "houses.txt":
 
 \begin{LPNcodedisplay}
 gryffindor.
@@ -396,25 +396,25 @@ main:-
    write([House1,House2,House3,House4]), nl.
 \end{LPNcodedisplay}
 This opens a file in \LPNterm{reading mode}, then reads
-four Prolog terms using the built-in predicate §read/2§,
+four Prolog terms using the built-in predicate "read/2",
 closes the stream, and prints the information as a list.
 
-All very straightforward. Nonetheless, the §read/2§ predicate needs to
+All very straightforward. Nonetheless, the "read/2" predicate needs to
 be handled with care. First of all, it only is able to handle Prolog
 terms (we'll say more about this problem shortly). And secondly, it
 will cause a run-time error if we use it to read from a stream when
 there is nothing to read. Is there an elegant way to overcome this
 second problem?
 
-There is. The built-in predicate §at_end_of_stream/1§ checks whether
+There is. The built-in predicate "at_end_of_stream/1" checks whether
 the \LPNterm{end of a stream} has been reached, and can be
-used as a safety-net.  For a stream §X§, §at_end_of_stream(X)§
+used as a safety-net.  For a stream "X", "at_end_of_stream(X)"
 will\index{PROLOG at_end_of_stream/1@\texttt{at\_end\_of\_stream/1}}
-evaluate to true  when the end of the stream §X§ is reached (in other
+evaluate to true  when the end of the stream "X" is reached (in other
 words, when all terms in the corresponding file have been read).
 
 The following code is a modified version of our earlier reading-in
-program, which shows how §at_end_of_stream/1§ can be incorporated:
+program, which shows how "at_end_of_stream/1" can be incorporated:
 
 \begin{LPNcodedisplay}
 main:-
@@ -432,19 +432,19 @@ read_houses(Stream,[X|L]):-
    read_houses(Stream,L).
 \end{LPNcodedisplay}
 
-Now for the nastier problem.  Recall that §read/2§ only reads in
+Now for the nastier problem.  Recall that "read/2" only reads in
 Prolog terms. If you want to read in arbitrary input, things become
 rather unpleasant, as Prolog forces you to read information on the
 level of characters.  The predicate that you need in this case is
-§get_code/2§ which\index{PROLOG get\_code/2@\texttt{get\_code/2}} reads the next
+"get_code/2" which\index{PROLOG get\_code/2@\texttt{get\_code/2}} reads the next
 available character from a stream.  Characters are represented in
-Prolog by their integer codes. For example, §get_code/2§ will return §97§
-if the next character on the stream is an §a§.
+Prolog by their integer codes. For example, "get_code/2" will return "97"
+if the next character on the stream is an "a".
 
 Usually we are not interested in these integer codes, but in the
 characters --- or rather, in the atoms that are made up of lists of
 these characters. How do we get our hands on these (lists of)
-characters? One way is to use the built-in predicate §atom_codes/2§
+characters? One way is to use the built-in predicate "atom_codes/2"
 that\index{PROLOG atom\_codes/2@\texttt{atom\_codes/2}} we introduced in
 Chapter~\ref{CHAPTER9} to convert a list of integers into the
 corresponding atom. We'll use this technique in the following example,
@@ -480,23 +480,23 @@ read, otherwise the next character is read.
 \section{Exercises}\label{SEC.L12.EXERCISES}
 
 \begin{LPNexercise}{L12.EX1}
-Write code that creates  §hogwart.houses§, a file that  that looks
+Write code that creates  "hogwart.houses", a file that  that looks
 like this:
 \begin{LPNcodedisplay}
        gryffindor
 hufflepuff     ravenclaw
        slytherin
 \end{LPNcodedisplay}
-You can use the built-in predicates §open/3§, §close/1§, §tab/2§,
-§nl/1§, and §write/2§.
+You can use the built-in predicates "open/3", "close/1", "tab/2",
+"nl/1", and "write/2".
 \end{LPNexercise}
 
 
 \begin{LPNexercise}{L12.EX2}
 Write a Prolog program that reads in a plain text file word by word,
 and asserts all read words and their frequency into the Prolog database. You may use the
-predicate §readWord/2§ to read in words. Use a dynamic predicate
-§word/2§ to store the words, where the first argument is a word, and
+predicate "readWord/2" to read in words. Use a dynamic predicate
+"word/2" to store the words, where the first argument is a word, and
 the second argument is the frequency of that word.
 \end{LPNexercise}
 
@@ -513,8 +513,8 @@ What is a testsuite? It is a file that contains lots of possible
 inputs (and expected outputs) for some program. In this case, a
 testsuite will be a file that has lists representing grammatical and
 ungrammatical sentences, such as
-§[the,woman,shoots,the,cow,under,the,shower]§ or
-§[him,shoots,woman]§. The test program should take this file, run the
+"[the,woman,shoots,the,cow,under,the,shower]" or
+"[him,shoots,woman]". The test program should take this file, run the
 grammar on each of the sentences, and store the results in another
 file. We can then look at the output file to check whether the grammar
 answered everywhere the way it should have. When developing grammars,
@@ -527,7 +527,7 @@ modifications we make to the grammar don't have unwanted effects.
 
 Take the DCG that you built in the practical session of
 Chapter~\ref{CHAPTER8} and turn it into a module, exporting the
-predicate §s/3§, that is, the predicate that lets you parse sentences and
+predicate "s/3", that is, the predicate that lets you parse sentences and
 returns the parse tree as its first argument.
 
 
@@ -545,7 +545,7 @@ screen. Turn that into a module as well.
 
 Now modify the program so that it prints the tree not to the
 screen but to a given stream. That means that the predicate
-§pptree§ should now be a two-place predicate taking the Prolog
+"pptree" should now be a two-place predicate taking the Prolog
 representation of a parse tree and a stream as arguments.
 
 
@@ -554,16 +554,16 @@ representation of a parse tree and a stream as arguments.
 \subsection*{Step 4}\label{L12.PRAXIS.STEP4}
 
 Import both modules into a file and define a two-place predicate
-§test§ which takes a list representing a sentence (such as
-§[a,woman,shoots]§), parses it,  and writes the result to the file
-specified by the second argument of §test§.
+"test" which takes a list representing a sentence (such as
+"[a,woman,shoots]"), parses it,  and writes the result to the file
+specified by the second argument of "test".
 Check that everything is working as it should.
 
 
 
 \subsection*{Step 5}\label{L12.PRAXIS.STEP5}
 
-Finally, modify §test/2§, so that it takes a filename instead of a
+Finally, modify "test/2", so that it takes a filename instead of a
 sentence as its first argument, reads in the sentences given in the
 file one by one, parses them, and writes the sentence as well as the
 parsing result into the output file. For example, if your input file
