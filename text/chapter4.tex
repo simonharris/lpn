@@ -50,11 +50,11 @@ first list shown above, "[mia, vincent, jules, yolanda]", is a list with
 four elements, namely "mia", "vincent", "jules", and "yolanda".  The
 \LPNterm{length} of a list is the number of elements it has, so our
 first example is a list of length four.
-\item{}From "[mia,robber(honey_bunny),X,2,mia]",
+\item{}From "[mia,robber(honey\_bunny),X,2,mia]",
 our second example,
 we learn that all sorts of Prolog
 objects can be elements of a list.  The first element of this list is
-"mia", an atom; the second element is "robber(honey_bunny)",
+"mia", an atom; the second element is "robber(honey\_bunny)",
 a complex term; the third element is "X", a variable; the fourth
 element is "2", a number.  Moreover, we also learn that the same
 item may occur more than once in the same list: for example, the fifth
@@ -178,7 +178,7 @@ yes
 \end{LPNcodedisplay}
 That is: the head of the list is bound to "X", the tail is bound
 to "Y".  (We also learn that Prolog has bound
-"Z" to the internal variable "_7800".)
+"Z" to the internal variable "\_7800".)
 
 But we  can do a lot more with "|"; it really is a
 flexible tool.  For example, suppose we wanted to know what the first
@@ -246,11 +246,11 @@ yes
 \end{LPNcodedisplay}
 
 
-The "_" symbol (that is, underscore) is the anonymous variable.  We
+The "\_" symbol (that is, underscore) is the anonymous variable.  We
 use it when we need to use a variable, but we're not interested in
 what Prolog instantiates the variable to.  As you can see in the above
-example, Prolog didn't bother telling us what "_" was bound to.
-Moreover, note that each occurrence of "_" is \LPNemph{independent}:
+example, Prolog didn't bother telling us what "\_" was bound to.
+Moreover, note that each occurrence of "\_" is \LPNemph{independent}:
 each is bound to something different. This couldn't happen with an
 ordinary variable of course, but then the anonymous variable isn't
 meant to be ordinary. It's simply a way of telling Prolog to bind
@@ -660,9 +660,9 @@ variant of it, many times over in many different guises.
 \item{}"[a,b,c,d] = [a,b,c|[d]]."
 \item{}"[a,b,c,d] = [a,b,c,d,[]]."
 \item{}"[a,b,c,d] = [a,b,c,d|[]]."
-\item{}"[] = _."
-\item{}"[] = [_]."
-\item{}"[] = [_|[]]."
+\item{}"[] = \_."
+\item{}"[] = [\_]."
+\item{}"[] = [\_|[]]."
 \end{enumerate}
 \end{LPNexercise}
 \begin{LPNexercise}{L4.EX1.2}Which of the following are syntactically correct lists? If the representation is correct, how many elements does the list have?

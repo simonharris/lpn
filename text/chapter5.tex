@@ -84,7 +84,7 @@ R = 1
 
 Moreover, we can use arithmetic operations when we define predicates.
 Here's a simple example.  Let's define a predicate
-"add_3_and_double/2" whose arguments are both integers.  This
+"add\_3\_and\_double/2" whose arguments are both integers.  This
 predicate takes its first argument, adds three to it, doubles the
 result, and returns the number obtained as the second argument.  We
 define this predicate as follows:
@@ -185,7 +185,7 @@ had asked
 \begin{LPNcodedisplay}
 6+2 is X.
 \end{LPNcodedisplay}
-we would have got a message saying "instantiation_error",
+we would have got a message saying "instantiation\_error",
 or something similar.
 
 Moreover, although we are free to use variables on the right hand side
@@ -193,7 +193,7 @@ of "is", when we actually carry out evaluation, the variable must
 already have been instantiated to a variable-free arithmetic
 expression.  If the variable is uninstantiated, or if it is
 instantiated to something other than an integer, we will get some sort
-of "instantiation_error" message.  This is because arithmetic isn't
+of "instantiation\_error" message.  This is because arithmetic isn't
 performed using Prolog's usual unification and knowledge base search
 mechanisms: it's done by calling up a special black box which knows
 about integer arithmetic.  If we hand the black box the wrong kind of
@@ -206,7 +206,7 @@ add_3_and_double(X,Y) :- Y is (X+3)*2.
 \end{LPNcodedisplay}
 When we described this predicate, we carefully said that it added 3 to
 its first argument, doubled the result, and returned the answer in its
-second argument.  For example, "add_3_and_double(3,X)" returns
+second argument.  For example, "add\_3\_and\_double(3,X)" returns
 "X = 12".  We didn't say anything about using this predicate in
 the reverse direction.  For example, we might hope that posing the
 query
@@ -214,7 +214,7 @@ query
 ?- add_3_and_double(X,12).
 \end{LPNcodedisplay}
 would return the answer "X=3".   But it doesn't. Instead we
-get the "instantiation_error" message.  Why?  Well, when we pose
+get the "instantiation\_error" message.  Why?  Well, when we pose
 the query this way round, we are asking Prolog to evaluate
 "12 is (X+3)*2", which it \LPNemph{can't} do as "X"
 is not instantiated.
@@ -368,11 +368,11 @@ recursion before they can be evaluated. To understand this, compare
 the traces for the queries "accLen([a,b,c],0,L)" (see above) and
 "len([a,b,c],0,L)" (given below). In the first case the result is
 built while going into the recursion --- once the bottom is reached at
-"accLen([],3,_G449)", the result is there and only has to be passed
+"accLen([],3,\_G449)", the result is there and only has to be passed
 up. In the second case the result is built while coming out of the
-recursion; the result of "len([b,c], _G481)", for instance, is only
+recursion; the result of "len([b,c], \_G481)", for instance, is only
 computed after the recursive call of "len" has been completed and the
-result of "len([c],_G489)" is known. In short, tail recursive programs
+result of "len([c],\_G489)" is known. In short, tail recursive programs
 have less bookkeeping overhead, and this makes them more efficient.
 
 \begin{LPNcodedisplay}

@@ -80,9 +80,9 @@ need to. This can be annoying if you are consulting very large
 files.
 
 The built-in predicate
-"ensure_loaded/1" behaves more intelligently  in this respect.  It
+"ensure\_loaded/1" behaves more intelligently  in this respect.  It
 works as follows. On encountering the following
-directive\index{PROLOG ensure_loaded/1@\texttt{ensure\_loaded/1}}
+directive\index{PROLOG ensure\_loaded/1@\texttt{ensure\_loaded/1}}
 \begin{LPNcodedisplay}
 :- ensure_loaded([listPredicates]).
 \end{LPNcodedisplay}
@@ -242,9 +242,9 @@ Again, the  definition of the
 "printMovies", so there won't be any
 clash when loading both modules at the same time.
 
-Modules can be loaded with the built-in predicates "use_module/1".
+Modules can be loaded with the built-in predicates "use\_module/1".
 This will \LPNterm{import} all predicates that were defined as public
-by the module. In other words, all public predicates will be\index{PROLOG use_module/1@\texttt{use\_module/1}}
+by the module. In other words, all public predicates will be\index{PROLOG use\_module/1@\texttt{use\_module/1}}
 accessible. To do this we need to change the main file as follows:
 
 \begin{LPNcodedisplay}
@@ -255,7 +255,7 @@ accessible. To do this we need to change the main file as follows:
 \end{LPNcodedisplay}
 
 If you don't want to use all public predicates of a module, but only
-some of them, you can use the two-place version of "use_module", which
+some of them, you can use the two-place version of "use\_module", which
 takes a list of predicates that you actually want to import as its
 \index{PROLOG use_module/2@\texttt{use\_module/2}} second argument.
 So, by putting
@@ -406,15 +406,15 @@ will cause a run-time error if we use it to read from a stream when
 there is nothing to read. Is there an elegant way to overcome this
 second problem?
 
-There is. The built-in predicate "at_end_of_stream/1" checks whether
+There is. The built-in predicate "at\_end\_of\_stream/1" checks whether
 the \LPNterm{end of a stream} has been reached, and can be
-used as a safety-net.  For a stream "X", "at_end_of_stream(X)"
-will\index{PROLOG at_end_of_stream/1@\texttt{at\_end\_of\_stream/1}}
+used as a safety-net.  For a stream "X", "at\_end\_of\_stream(X)"
+will\index{PROLOG at\_end\_of\_stream/1@\texttt{at\_end\_of\_stream/1}}
 evaluate to true  when the end of the stream "X" is reached (in other
 words, when all terms in the corresponding file have been read).
 
 The following code is a modified version of our earlier reading-in
-program, which shows how "at_end_of_stream/1" can be incorporated:
+program, which shows how "at\_end\_of\_stream/1" can be incorporated:
 
 \begin{LPNcodedisplay}
 main:-
@@ -436,15 +436,15 @@ Now for the nastier problem.  Recall that "read/2" only reads in
 Prolog terms. If you want to read in arbitrary input, things become
 rather unpleasant, as Prolog forces you to read information on the
 level of characters.  The predicate that you need in this case is
-"get_code/2" which\index{PROLOG get\_code/2@\texttt{get\_code/2}} reads the next
+"get\_code/2" which\index{PROLOG get\_code/2@\texttt{get\_code/2}} reads the next
 available character from a stream.  Characters are represented in
-Prolog by their integer codes. For example, "get_code/2" will return "97"
+Prolog by their integer codes. For example, "get\_code/2" will return "97"
 if the next character on the stream is an "a".
 
 Usually we are not interested in these integer codes, but in the
 characters --- or rather, in the atoms that are made up of lists of
 these characters. How do we get our hands on these (lists of)
-characters? One way is to use the built-in predicate "atom_codes/2"
+characters? One way is to use the built-in predicate "atom\_codes/2"
 that\index{PROLOG atom\_codes/2@\texttt{atom\_codes/2}} we introduced in
 Chapter~\ref{CHAPTER9} to convert a list of integers into the
 corresponding atom. We'll use this technique in the following example,

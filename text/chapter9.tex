@@ -843,9 +843,9 @@ operator notations into Prolog's internal representation.
 
 In addition to providing a user-friendly operator notation for certain
 functors, Prolog also lets you define your own operators. So you
-could, for example, define a postfix operator "is_dead"; then
-Prolog would allow you to write "zed is_dead" as a fact in your
-database instead of "is_dead(zed)".
+could, for example, define a postfix operator "is\_dead"; then
+Prolog would allow you to write "zed is\_dead" as a fact in your
+database instead of "is\_dead(zed)".
 
 Operator definitions in Prolog look like this:  \index{PROLOG op/3@\texttt{op/3}}
 \begin{LPNcodedisplay}
@@ -868,7 +868,7 @@ prefix&"fx", "fy"\\
 suffix&"xf", "yf"
 \end{tabular}\end{center}
 
-So  your operator definition for "is_dead" might be as follows:
+So  your operator definition for "is\_dead" might be as follows:
 \begin{LPNcodedisplay}
 :- op(500, xf, is_dead).
 \end{LPNcodedisplay}
@@ -889,7 +889,7 @@ argument of "op".
 ":- op(  500, yfx, [ +, -])."\\
 ":- op(  500,  fx, [ +, - ])."\\
 ":- op(  300, xfx, [ mod ])."\\
-":- op(  200, xfy, [ ^ ])."
+":- op(  200, xfy, [ \^ ])."
 \end{tabular}\end{center}
 
 One final point should made explicit. Operator definitions don't
@@ -897,15 +897,15 @@ specify the \LPNemph{meanings} of operators, they only describe how
 they can be used syntactically. That is, an operator definition
 doesn't say anything about when a query involving this operator will
 evaluate to true, it merely extends the \LPNemph{syntax} of
-Prolog. So if the operator "is_dead" is defined as above, and you pose
-the query "zed is_dead", Prolog won't complain about illegal syntax
+Prolog. So if the operator "is\_dead" is defined as above, and you pose
+the query "zed is\_dead", Prolog won't complain about illegal syntax
 (as it would without this definition) but  will try to prove the
-goal "is_dead(zed)", which is Prolog's internal representation of
-"zed is_dead". And this is all operator definitions do --- they just tell
+goal "is\_dead(zed)", which is Prolog's internal representation of
+"zed is\_dead". And this is all operator definitions do --- they just tell
 Prolog how to translate a user-friendly notation into real Prolog
 notation. So, what would be Prolog's answer to the query
-"zed is_dead"? It would be "no", because Prolog would try to prove
-"is_dead(zed)", but would not find any matching clause in the
+"zed is\_dead"? It would be "no", because Prolog would try to prove
+"is\_dead(zed)", but would not find any matching clause in the
 database.  But suppose we extended the database as follows:
 \begin{LPNcodedisplay}
 :- op(500, xf, is_dead).

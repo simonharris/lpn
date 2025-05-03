@@ -602,11 +602,11 @@ no
 
 
 What's going on?  Well, in the modified database, the first thing that
-Prolog has to check is whether "\\+ big_kahuna_burger(X)" holds,
-which means that it must check whether "big_kahuna_burger(X)"
+Prolog has to check is whether "\\+ big\_kahuna\_burger(X)" holds,
+which means that it must check whether "big\_kahuna\_burger(X)"
 fails.  But this succeeds. After all, the database contains the
-information "big_kahuna_burger(b)". So the query
-"\\+ big_kahuna_burger(X)" fails, and hence the original query
+information "big\_kahuna\_burger(b)". So the query
+"\\+ big\_kahuna\_burger(X)" fails, and hence the original query
 does too.  In a nutshell, the crucial difference between the two
 programs is that in the original version (the one that works right) we
 use "\\+" only \LPNemph{after} we have instantiated the

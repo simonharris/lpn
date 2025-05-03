@@ -107,7 +107,7 @@ Let's take a detailed look at what happens when we pose the query
 
 When we pose this query, Prolog will match it to the
 head of the recursive rule, generating a new internal variable
-(say "_G518") in the process. If we carried out a trace of what
+(say "\_G518") in the process. If we carried out a trace of what
 happens next, we would get something like the following:
 
 \begin{LPNcodedisplay}
@@ -129,8 +129,8 @@ Prolog recurses its way down the list in its first argument until it
 can apply the base case of the recursive definition.  Then, as the
 next four lines show, it then stepwise `fills in' the result.  How is
 this `filling in' process carried out?  By successively instantiating
-the variables "_G593", "_G590", "_G587", and
-"_G518". But while it's important to grasp this basic pattern, it
+the variables "\_G593", "\_G590", "\_G587", and
+"\_G518". But while it's important to grasp this basic pattern, it
 doesn't tell us all we need to know about the way "append/3" works,
 so let's dig deeper. Here is the search tree for the query
 "append([a,b,c],[1,2,3],X)". We'll work carefully through
@@ -144,52 +144,52 @@ and what the variables are instantiated to.
 
 \begin{enumerate}
 
-\item{}Goal 1: "append([a,b,c],[1,2,3],_G518)".  Prolog
+\item{}Goal 1: "append([a,b,c],[1,2,3],\_G518)".  Prolog
 matches this to the head of the recursive rule (that is,
-"append([H|T],L2,[H|L3])").  Thus "_G518" is unified to
+"append([H|T],L2,[H|L3])").  Thus "\_G518" is unified to
 "[a|L3]", and Prolog has the new goal
 "append([b,c],[1,2,3],L3)".
-It generates a new variable "_G587" for
-"L3", thus we have that "_G518 = [a|_G587]".
+It generates a new variable "\_G587" for
+"L3", thus we have that "\_G518 = [a|\_G587]".
 
-\item{}Goal 2: "append([b,c],[1,2,3],_G587)".  Prolog matches
-this to the head of the recursive rule, thus "_G587" is unified
+\item{}Goal 2: "append([b,c],[1,2,3],\_G587)".  Prolog matches
+this to the head of the recursive rule, thus "\_G587" is unified
 to "[b|L3]", and Prolog has the new goal
 "append([c],[1,2,3],L3)".
-It generates the internal variable "_G590" for
-"L3", thus we have that "_G587 = [b|_G590]".
+It generates the internal variable "\_G590" for
+"L3", thus we have that "\_G587 = [b|\_G590]".
 
-\item{}Goal 3: "append([c],[1,2,3],_G590").  Prolog matches this
-to the head of the recursive rule, thus "_G590" is unified  to
+\item{}Goal 3: "append([c],[1,2,3],\_G590").  Prolog matches this
+to the head of the recursive rule, thus "\_G590" is unified  to
 "[c|L3]", and Prolog has the new goal
 "append([],[1,2,3],L3)".
-It generates the internal variable "_G593" for "L3",
-thus we have that "_G590 = [c|_G593]".
+It generates the internal variable "\_G593" for "L3",
+thus we have that "\_G590 = [c|\_G593]".
 
-\item{}Goal 4: "append([],[1,2,3],_G593").  At last: Prolog
+\item{}Goal 4: "append([],[1,2,3],\_G593").  At last: Prolog
 can use the base clause (that is, "append([],L,L)").  And in the
 four successive matching steps, Prolog will obtain answers to Goal 4,
 Goal 3, Goal 2, and Goal 1. Here's how.
 
 \item{}Answer to Goal 4: "append([],[1,2,3],[1,2,3])". This
 is because when we match Goal 4 (that is,
-"append([],[1,2,3],_G593)" to the base clause, "_G593" is
+"append([],[1,2,3],\_G593)" to the base clause, "\_G593" is
 unified to "[1,2,3]".
 
 \item{}Answer to Goal 3: "append([c],[1,2,3],[c,1,2,3])".  Why?
-Because Goal 3 is "append([c],[1,2,3],_G590])", and "_G590" is the
-list "[c|_G593]", and we have just unified "_G593" to "[1,2,3]". So
-"_G590" is unified to "[c,1,2,3]".
+Because Goal 3 is "append([c],[1,2,3],\_G590])", and "\_G590" is the
+list "[c|\_G593]", and we have just unified "\_G593" to "[1,2,3]". So
+"\_G590" is unified to "[c,1,2,3]".
 
 \item{}Answer to Goal 2: "append([b,c],[1,2,3],[b,c,1,2,3])".
-Why? Because Goal 2 is "append([b,c],[1,2,3],_G587])", and
-"_G587" is the list  "[b|_G590]", and we have just unified "_G590" to
-"[c,1,2,3]". So "_G587" is unified to "[b,c,1,2,3]".
+Why? Because Goal 2 is "append([b,c],[1,2,3],\_G587])", and
+"\_G587" is the list  "[b|\_G590]", and we have just unified "\_G590" to
+"[c,1,2,3]". So "\_G587" is unified to "[b,c,1,2,3]".
 
 \item{}Answer to Goal 1: "append([a,b,c],[1,2,3],[a,b,c,1,2,3])".
-Why? Because Goal 2 is "append([a,b,c],[1,2,3],_G518])",  and
-"_G518" is the list "[a|_G587]", and we have just unified "_G587" to
-"[b,c,1,2,3]". So "_G518" is unified to "[a,b,c,1,2,3]".
+Why? Because Goal 2 is "append([a,b,c],[1,2,3],\_G518])",  and
+"\_G518" is the list "[a|\_G587]", and we have just unified "\_G587" to
+"[b,c,1,2,3]". So "\_G518" is unified to "[a,b,c,1,2,3]".
 
 \item{}Thus Prolog now knows how to instantiate "X", the original
 query variable.  It tells us that "X = [a,b,c,1,2,3]", which
@@ -209,7 +209,7 @@ Moreover, it illustrates a more general theme: the use of unification to
 build structure. In a nutshell, the recursive calls to "append/3" build up
 this nested pattern of variables which code up the required
 answer. When Prolog finally instantiates the innermost variable
-"_G593" to "[1, 2, 3]", the answer crystallises out, like a snowflake
+"\_G593" to "[1, 2, 3]", the answer crystallises out, like a snowflake
 forming around a grain of dust. But it is unification, not magic, that
 produces the result.
 
@@ -388,7 +388,7 @@ Now, a reverse predicate is a useful predicate to have around. As you
 will have realised by now, lists in Prolog are far easier to access
 from the front than from the back. For example, to pull out the head
 of a list "L", all we have to do is perform the unification
-"[H|_] = L"; this results in "H" being instantiated to the head of "L". But
+"[H|\_] = L"; this results in "H" being instantiated to the head of "L". But
 pulling out the last element of an arbitrary list is harder: we can't
 do it simply using unification.  On the other hand, if we had a
 predicate which reversed lists, we could first reverse the input list,

@@ -37,7 +37,7 @@ Recall that there are three types of term:
 \item{}Constants. These can either be atoms (such as "vincent") or numbers
 (such as "24").
 \item{}Variables. (Such as "X", "Z3", and "List".)
-\item{}Complex terms. These have the form:\\ "functor(term_1,...,term_n)".
+\item{}Complex terms. These have the form:\\ "functor(term\_1,...,term\_n)".
 \end{enumerate}
 
 We are  going to work our way towards a  definition of when
@@ -271,18 +271,18 @@ X = _5071
 Y = _5071
 yes
 \end{LPNcodedisplay}
-What's going on here?  Essentially the same thing. Note that "_5071"
+What's going on here?  Essentially the same thing. Note that "\_5071"
 is a variable (recall from Chapter~\ref{CHAPTER1} that strings of
 letters and numbers that start with the underscore character are
 variables).  Now look at clause~2 of the definition of
 unification. This tells us that when two variables are unified, they
-share values. So Prolog has created a new variable (namely "_5071")
+share values. So Prolog has created a new variable (namely "\_5071")
 and from now on both "X" and "Y" share the value of this variable. In
 effect, Prolog is creating a common variable name for the two original
 variables.  Needless to say, there's nothing magic about the number
 "5071".  Prolog just needs to generate a brand new variable name, and
 using numbers is a handy way to do this. It might just as well
-generate "_5075", or "_6189", or whatever.
+generate "\_5075", or "\_6189", or whatever.
 
 Here is another example involving only atoms and variables. How do you
 think will Prolog respond?
@@ -627,12 +627,12 @@ no
 %
 This query is: if we want a horizontal line between a point at (2,3),
 and some other point, what other points are permissible?  The answer
-is: any point whose y-coordinate is 3. Note that the "_1972" in the
+is: any point whose y-coordinate is 3. Note that the "\_1972" in the
 first argument of the answer is a variable, which is Prolog's way of
 telling us that any x-coordinate at all will do.
 
 A general remark: the answer given to our last query, namely
-"point(_1972,3)", is \LPNemph{structured}. That is, the answer is a
+"point(\_1972,3)", is \LPNemph{structured}. That is, the answer is a
 complex term, representing a sophisticated concept (namely ``any point
 whose y-coordinate is 3''). This structure was built using unification
 and nothing else: no logical inference (and in particular, no use of
@@ -694,7 +694,7 @@ the head of the rule "k(X) :- f(X), g(X), h(X)".
 
 When Prolog unifies the variable in a query to a variable in a fact or
 rule, it generates a brand new variable
-(say "_G34")
+(say "\_G34")
 to represent the shared
 variables. So the original query now reads:
 \begin{LPNcodedisplay}
@@ -727,19 +727,19 @@ and succinct if we think graphically. Consider the following diagram:
 Everything in a box is either a query or a goal.  In particular, our
 original goal was to prove "k(Y)", thus this is shown in the top box.
 When we unified "k(Y)" with the head of the rule in the knowledge
-base, "X" "Y", and the new internal variable "_G34" were made to share
-values, and we were left with the goals "f(_G34),g(_G34),h(_G34)",
+base, "X" "Y", and the new internal variable "\_G34" were made to share
+values, and we were left with the goals "f(\_G34),g(\_G34),h(\_G34)",
 just as shown.
 
 Now, whenever it has a list of goals, Prolog tries to satisfy them one
 by one, working through the list in a left to right direction. The
-leftmost goal is "f(_G34)", which reads: ``I want an individual with
+leftmost goal is "f(\_G34)", which reads: ``I want an individual with
 property "f"''. Can this goal be satisfied? Prolog tries to do so by
 searching through the knowledge base from top to bottom.  The first
 item it finds that unifies with this goal is the fact "f(a)". This
-satisfies the goal "f(_G34)" and we are left with two more goals.
-Now, when we unify "f(_G34)" to "f(a)", "_G34" is instantiated to "a",
-and this instantiation applies to all occurrences of "_G34" in the
+satisfies the goal "f(\_G34)" and we are left with two more goals.
+Now, when we unify "f(\_G34)" to "f(a)", "\_G34" is instantiated to "a",
+and this instantiation applies to all occurrences of "\_G34" in the
 list of goals. So the list now looks like this:
 \begin{LPNcodedisplay}
 g(a),h(a)
@@ -774,7 +774,7 @@ a fact or the head of a rule in the knowledge base. It does this by
 going back up the path shown in the graphical representation, looking
 for alternatives. Now, there is nothing else in the knowledge base
 that unifies with "g(a)", but there \LPNemph{is} another way of
-unifying "f(_G34)".  Points in the search where there are several
+unifying "f(\_G34)".  Points in the search where there are several
 alternative ways of unifying a goal against the knowledge base are
 called \LPNterm{choice points}.  Prolog keeps track of choice points it
 has encountered, so that if it makes a wrong choice it can retreat to
@@ -791,8 +791,8 @@ f(_G34),g(_G34),h(_G34).
 Prolog must now redo this work.  First it must try to
 \LPNterm{re-satisfy} the first goal  by searching further in the
 knowledge base.  It can do this: it sees that it can unify the first
-goal with information in the knowledge base by unifying "f(_G34)" with
-"f(b)". This satisfies the goal "f(_G34)" and instantiates "X" to "b",
+goal with information in the knowledge base by unifying "f(\_G34)" with
+"f(b)". This satisfies the goal "f(\_G34)" and instantiates "X" to "b",
 so that the remaining goal list is
 \begin{LPNcodedisplay}
 g(b),h(b).
@@ -818,7 +818,7 @@ solution by typing:
 This forces Prolog to backtrack to the last choice point, to try and
 find another possibility. However, there are no other choice points, as
 there are no other possibilities for unifying "h(b)", "g(b)",
-"f(_G34)", or "k(Y)" with clauses in the knowledge base, so Prolog
+"f(\_G34)", or "k(Y)" with clauses in the knowledge base, so Prolog
 would respond no.  On the other hand, if there had been other rules
 involving "k", Prolog would have gone off and tried to use them in
 exactly the way we have described: that is, by searching top to bottom
@@ -877,24 +877,24 @@ So the new goals that have to be satisfied are:
 \begin{LPNcodedisplay}
 loves(_G5,_G6),loves(_G7,_G6)
 \end{LPNcodedisplay}
-Now we have to unify "loves(_G5,_G6)" against the knowledge base.
+Now we have to unify "loves(\_G5,\_G6)" against the knowledge base.
 There are two ways of doing this (it can either be unified with the
 first fact or with the second fact) and this is why the path branches
-at this point. In both cases the goal "loves(_G7,mia)" remains, and
+at this point. In both cases the goal "loves(\_G7,mia)" remains, and
 this can also be satisfied by using  either of two facts.  All in
 all there are four leaf nodes with an empty goal list, which means
 that there are four ways of satisfying the original query. The
 variable instantiations for each solution can be read off the path
 from the root to the leaf node. So the four solutions are:
 \begin{enumerate}
-\item{}"X = _G5 = vincent" and
-"Y = _G7 = vincent"
-\item{}"X = _G5 = vincent" and
-"Y = _G7 = marcellus"
-\item{}"X = _G5 = marcellus" and
-"Y = _G7 = vincent"
-\item{}"X = _G5 = marcellus" and
-"Y = _G7 = marcellus"
+\item{}"X = \_G5 = vincent" and
+"Y = \_G7 = vincent"
+\item{}"X = \_G5 = vincent" and
+"Y = \_G7 = marcellus"
+\item{}"X = \_G5 = marcellus" and
+"Y = \_G7 = vincent"
+\item{}"X = \_G5 = marcellus" and
+"Y = \_G7 = marcellus"
 \end{enumerate}
 Work through this example carefully, and make sure you understand it.
 
@@ -915,7 +915,7 @@ variable instantiations that lead to successful unification.
 \item{}"food(X) = food(bread)"
 \item{}"food(bread,X) = food(Y,sausage)"
 \item{}"food(bread,X,beer) = food(Y,sausage,X)"
-\item{}"food(bread,X,beer) = food(Y,kahuna_burger)"
+\item{}"food(bread,X,beer) = food(Y,kahuna\_burger)"
 \item{}"food(X) = X"
 \item{}"meal(food(bread),drink(beer)) = meal(X,Y)"
 \item{}"meal(food(bread),X) = meal(X,drink(beer))"
@@ -937,7 +937,7 @@ magic(X):- witch(X).
 Which of the following queries are satisfied? Where relevant, give all
 the variable instantiations that lead to success.
 \begin{enumerate}
-\item{}"?- magic(house_elf)."
+\item{}"?- magic(house\_elf)."
 \item{}"?- wizard(harry)."
 \item{}"?- magic(wizard)."
 \item{}"?- magic('McGonagall')."
@@ -1153,7 +1153,7 @@ we'll remark that the third line is where the variable in the query is
 (wrongly) instantiated to "a". The first line marked "fail" is where
 Prolog realises it's taken the wrong path and starts to backtrack, and
 the line marked "redo" is where it tries alternatives for the goal
-"f(_G34)".
+"f(\_G34)".
 
 \clearpage
 While learning Prolog, use trace, and use it heavily. It's a great way

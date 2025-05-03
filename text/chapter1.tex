@@ -559,7 +559,7 @@ Let's take a closer look. To make things crystal clear, let's first be
 precise about the basic \LPNterm{characters} (that is, symbols) at our
 disposal.  The \LPNemph{upper-case letters} are "A", "B",\ldots,"Z";
 the \LPNemph{lower-case letters} are "a", "b",\ldots,"z"; the
-\LPNemph{digits} are "0", "1", "2",\ldots,"9". In addition we have the "_"
+\LPNemph{digits} are "0", "1", "2",\ldots,"9". In addition we have the "\_"
 symbol, which is called \LPNterm{underscore}, and some \LPNemph{special
   characters}, which include characters such as "+", "-", "*", "/",
 "<", ">", "=", ":", ".", "\&", "~".  The blank \LPNemph{space} is also
@@ -576,10 +576,10 @@ An \LPNterm{atom} is either:
 \item{}A string of characters made up of upper-case letters,
   lower-case letters, digits, and the underscore character, that
   begins with a lower-case letter.  Here are some examples: "butch",
-  "big_kahuna_burger", "listens2Music" and "playsAirGuitar".
+  "big\_kahuna\_burger", "listens2Music" and "playsAirGuitar".
 \item{}An arbitrary sequence of characters enclosed in single quotes.
-  For example '"Vincent"', '"The Gimp"', '"Five_Dollar_Shake"',
-  '"\&^%\&#@$ \&*"', and '" "'.
+  For example '"Vincent"', '"The Gimp"', '"Five\_Dollar\_Shake"',
+  '"\&\^\%\&\#@\$\&*"', and '" "'.
   The sequence of characters between the single quotes is called the \LPNterm{atom name}.
   Note that we are allowed to use spaces in such
   atoms; in fact, a common reason for using single quotes is so we
@@ -611,10 +611,10 @@ syntax is the obvious one: "23", "1001", "0", "-365", and so on.
 A \LPNterm{variable} is a string of upper-case letters, lower-case letters,
 digits and underscore characters that starts \LPNemph{either} with an
 upper-case letter \LPNemph{or} with an underscore.  For example, "X",
-"Y", "Variable", "_tag", "X_526",  "List", "List24", "_head",
-"Tail", "_input" and "Output" are all Prolog variables.
+"Y", "Variable", "\_tag", "X\_526",  "List", "List24", "\_head",
+"Tail", "\_input" and "Output" are all Prolog variables.
 
-The variable "_" (that is, a single underscore character) is rather
+The variable "\_" (that is, a single underscore character) is rather
 special.  It's called the \LPNemph{anonymous variable}, and we discuss
 it in Chapter~\ref{CHAPTER4}.
 
@@ -717,12 +717,12 @@ and the "love/3" predicate as distinct.
 \item{}"Footmassage"
 \item{}"variable23"
 \item{}"Variable2000"
-\item{}"big_kahuna_burger"
+\item{}"big\_kahuna\_burger"
 \item{}"'big kahuna burger'"
 \item{}"big kahuna burger"
 \item{}"'Jules'"
-\item{}"_Jules"
-\item{}"'_Jules'"
+\item{}"\_Jules"
+\item{}"'\_Jules'"
 \end{enumerate}
 \end{LPNexercise}
 
@@ -738,7 +738,7 @@ and the "love/3" predicate as distinct.
 \item{}"boxer(Butch)"
 \item{}"and(big(burger),kahuna(burger))"
 \item{}"and(big(X),kahuna(X))"
-\item{}"_and(big(X),kahuna(X))"
+\item{}"\_and(big(X),kahuna(X))"
 \item{}"(Butch kills Vincent)"
 \item{}"kills(Butch Vincent)"
 \item{}"kills(Butch,Vincent"

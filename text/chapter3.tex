@@ -45,13 +45,13 @@ just_ate(stork,frog).
 
 At first glance this seems pretty ordinary: it's just a knowledge base
 containing three facts and two rules.  But the definition of the
-"is_digesting/2" predicate is \LPNterm{recursive}.  Note that
-"is_digesting/2" is (at least partially) defined in terms of itself,
-for the "is_digesting/2" functor occurs in both the head and body of
+"is\_digesting/2" predicate is \LPNterm{recursive}.  Note that
+"is\_digesting/2" is (at least partially) defined in terms of itself,
+for the "is\_digesting/2" functor occurs in both the head and body of
 the second rule.  Crucially, however, there is an `escape' from this
-circularity.  This is provided by the "just_ate/2" predicate, which
+circularity.  This is provided by the "just\_ate/2" predicate, which
 occurs in the first rule.  (Significantly, the body of the first rule
-makes no mention of "is_digesting/2".)  Let's now consider both the
+makes no mention of "is\_digesting/2".)  Let's now consider both the
 \LPNterm{declarative} and \LPNterm{procedural} meanings of this definition.
 
 The word ``declarative'' is used to talk about the logical meaning of
@@ -100,7 +100,7 @@ Let's see how this works. If we pose the query:
 ?- is_digesting(stork,mosquito).
 \end{LPNcodedisplay}
 then Prolog goes to work as follows.  First, it tries to make use of
-the first rule listed concerning "is_digesting"; that is, the
+the first rule listed concerning "is\_digesting"; that is, the
 base rule.  This tells it that "X" is digesting
 "Y" if "X" just ate "Y", By unifying
 "X" with "stork" and "Y" with
@@ -120,7 +120,7 @@ just_ate(stork,Z),
 is_digesting(Z,mosquito).
 \end{LPNcodedisplay}
 That is, to show
-"is_digesting(stork,mosquito)", Prolog
+"is\_digesting(stork,mosquito)", Prolog
 needs to find a value for "Z" such that, firstly,
 \begin{LPNcodedisplay}
 just_ate(stork,Z).
@@ -138,7 +138,7 @@ will succeed, for this fact is listed in the knowledge base.  And deducing
 \begin{LPNcodedisplay}
 is_digesting(frog,mosquito).
 \end{LPNcodedisplay}
-is almost as simple, for the first clause of "is_digesting/2"
+is almost as simple, for the first clause of "is\_digesting/2"
 reduces this goal to deducing
 \begin{LPNcodedisplay}
 just_ate(frog,mosquito).
@@ -315,7 +315,7 @@ descend(_633,donna).
 
 Prolog takes the first subgoal and tries to unify  it with something in
 the knowledge base. It finds the fact "child(anne,bridget)"
-and the variable "_633" gets instantiated to "bridget".
+and the variable "\_633" gets instantiated to "bridget".
 Now that the first subgoal is satisfied, Prolog moves to the
 second subgoal. It has to prove
 
@@ -342,7 +342,7 @@ descend(_1785,donna).
 
 The first one can be unified with the fact
 "child(bridget,caroline)" of the knowledge base, so that the
-variable "_1785" is instantiated with "caroline". Next Prolog
+variable "\_1785" is instantiated with "caroline". Next Prolog
 tries to prove
 
 \begin{LPNcodedisplay}
@@ -564,10 +564,10 @@ outermost "succ" functor is stripped off the first argument of the
 original query, and the result becomes the first argument of the
 recursive query. The second argument is passed on unchanged to the
 recursive query, and the third argument of the recursive query is a
-variable, the internal variable "_G648" in the trace given below. Note
-that "_G648" is not instantiated yet. However it shares values with
+variable, the internal variable "\_G648" in the trace given below. Note
+that "\_G648" is not instantiated yet. However it shares values with
 "R" (the variable that we used as the third argument in the original
-query) because "R" was instantiated to "succ(_G648)" when the query
+query) because "R" was instantiated to "succ(\_G648)" when the query
 was unified with the head of the second clause. But that means that
 "R" is not a completely uninstantiated variable anymore. It is now a
 complex term, that has a (uninstantiated) variable as its argument.
@@ -577,10 +577,10 @@ argument becomes one layer of "succ" smaller; both the trace and the
 search tree given below show this nicely.  At the same time, a "succ"
 functor is added to "R" at every step, but always leaving
 the innermost variable uninstantiated. After the first recursive
-call "R" is "succ(_G648)".  After the second recursive call, "_G648"
-is instantiated with "succ(_G650)", so that "R" is "succ(succ(_G650)".
-After the third recursive call, "_G650" is instantiated with
-"succ(_G652)" and "R" therefore becomes "succ(succ(succ(_G652)))". The
+call "R" is "succ(\_G648)".  After the second recursive call, "\_G648"
+is instantiated with "succ(\_G650)", so that "R" is "succ(succ(\_G650)".
+After the third recursive call, "\_G650" is instantiated with
+"succ(\_G652)" and "R" therefore becomes "succ(succ(succ(\_G652)))". The
 search tree shows this step by step instantiation.
 
 At this stage all "succ" functors have been stripped off the first
@@ -878,7 +878,7 @@ it should reply yes.
 \end{LPNexercise}
 
 
-\begin{LPNexercise}{L3.EX2}Define a predicate "greater_than/2"
+\begin{LPNexercise}{L3.EX2}Define a predicate "greater\_than/2"
 that takes two numerals in the notation that we introduced in the text
 (that is, 0, succ(0), succ(succ(0)), and so on) as arguments and
 decides whether the first one is greater than the second one. For example:

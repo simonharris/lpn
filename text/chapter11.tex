@@ -233,7 +233,7 @@ But the important point is: \LPNemph{how} does it do this?  First,
 note that we have declared "lookup/3" as a dynamic predicate.  We need
 to do this as we plan to change the definition of "lookup/3"
 during run-time.  Second, note that there are two clauses defining
-"add_and_square/3". The second clause performs the required arithmetic
+"add\_and\_square/3". The second clause performs the required arithmetic
 calculation and asserts the result to the Prolog database using the
 predicate "lookup/3" (that is, it  caches the result).  The first
 clause checks the Prolog database to see if the calculation has
@@ -429,7 +429,7 @@ no
 That is, "bagof/3" is more fine-grained than "findall/3". It gives us the
 opportunity to extract the information we want in a more structured
 way.  Moreover, "bagof/3" can also do the same job as "findall/3", with the
-help of a special piece of syntax, namely "^":
+help of a special piece of syntax, namely "\^":
 \begin{LPNcodedisplay}
 ?- bagof(Child,Mother^descend(Mother,Child),List).
 \end{LPNcodedisplay}
@@ -447,7 +447,7 @@ Note that this is exactly the response that "findall/3" would have
 given us. Still, if this is the
 kind of query you want to make (and it often is) it's simpler to use
 "findall/3", because then you don't have to bother explicitly write
-down the conditions using "^".
+down the conditions using "\^".
 
 There is one important difference between "findall/3"
 and "bagof/3", namely that "bagof/3" fails if the
@@ -531,7 +531,7 @@ this with the following query:\index{PROLOG setof/3@\texttt{setof/3}}
 \end{LPNcodedisplay}
 (Note that, just as with "bagof/3", we have to tell "setof/3" not to
 generate separate lists for each value of "Y", and again we do
-this with the "^" symbol.)
+this with the "\^" symbol.)
 This query yields:
 \begin{LPNcodedisplay}
 X = _8711
