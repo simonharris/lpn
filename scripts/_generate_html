@@ -53,7 +53,8 @@ adjusthtml()
     cd ${OUTDIR}
     for HTML in `ls ${OUTDIR}*.html`; do
 	echo "Adjusting: ${HTML}"
-	cat ${HTML} | ${SCRIPTSDIR}/lpn_get_body.py > temp.html
+	perl -0777 -ne 'print $1 if /<body\s*>(.*?)<\/body>/s' ${HTML} > temp.html
+	
 	cat temp.html \
 	    | tr "\n" " " \
 	    | tr -s " " \
