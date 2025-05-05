@@ -308,7 +308,7 @@ object "X" is a member of a list if it is the head of that list.
 Note that we used the built-in "|" operator to state this (simple
 but important) principle about lists.
 
- What about the second clause, the recursive rule?  This says: an
+What about the second clause, the recursive rule?  This says: an
 object "X" is member of a list if it is a member of the tail of
 the list.  Again, note that we used the "|" operator to state
 this principle.
@@ -340,13 +340,13 @@ distinct atoms) so Prolog goes to the second clause, the recursive
 rule. This gives Prolog a new goal: it now has to see if
 
 \begin{LPNcodedisplay}
-member(vincent,[trudy,vincent,jules]).
+?- member(vincent,[trudy,vincent,jules]).
 \end{LPNcodedisplay}
 Once again the first clause won't help, so Prolog goes (again) to
 the recursive rule. This gives it a new goal, namely
 
 \begin{LPNcodedisplay}
-member(vincent,[vincent,jules]).
+?- member(vincent,[vincent,jules]).
 \end{LPNcodedisplay}
 This time, the first clause does help, and the query succeeds.
 
@@ -355,7 +355,7 @@ happens when we pose a query that \LPNemph{fails}?  For example, what
 happens if we pose the query
 
 \begin{LPNcodedisplay}
-member(zed,[yolanda,trudy,vincent,jules]).
+?- member(zed,[yolanda,trudy,vincent,jules]).
 \end{LPNcodedisplay}
 
 
@@ -369,25 +369,24 @@ cannot help, so Prolog uses the recursive rule, which gives it a new
 goal
 
 \begin{LPNcodedisplay}
-member(zed,[trudy,vincent,jules]).
+?- member(zed,[trudy,vincent,jules]).
 \end{LPNcodedisplay}
 Again, the first clause doesn't help, so Prolog reuses the recursive
 rule and tries to show that
 
 \begin{LPNcodedisplay}
-member(zed,[vincent,jules]).
+?- member(zed,[vincent,jules]).
 \end{LPNcodedisplay}
 Similarly, the first rule doesn't help, so Prolog reuses the second
-rule yet again and
-tries the goal
+rule yet again and tries the goal
 \begin{LPNcodedisplay}
-member(zed,[jules]).
+?- member(zed,[jules]).
 \end{LPNcodedisplay}
 Again the first clause doesn't help, so Prolog uses the second rule,
 which gives it the goal
 
 \begin{LPNcodedisplay}
-member(zed,[])
+?- member(zed,[])
 \end{LPNcodedisplay}
 And \LPNemph{this} is where things get interesting.  Obviously the
 first clause can't help here.  But note: \LPNemph{the recursive rule
@@ -481,15 +480,15 @@ the first argument is a list of "a"s, and the second argument is
 a list of "b"s of exactly the same length.  For example, if we
 pose the following query
 \begin{LPNcodedisplay}
-a2b([a,a,a,a],[b,b,b,b]).
+?- a2b([a,a,a,a],[b,b,b,b]).
 \end{LPNcodedisplay}
 we want Prolog to say yes. On the other hand, if we pose the query
 \begin{LPNcodedisplay}
-a2b([a,a,a,a],[b,b,b]).
+?- a2b([a,a,a,a],[b,b,b]).
 \end{LPNcodedisplay}
 or the query
 \begin{LPNcodedisplay}
-a2b([a,c,a,a],[b,b,5,4]).
+?- a2b([a,c,a,a],[b,b,5,4]).
 \end{LPNcodedisplay}
 we want Prolog to say no.
 
@@ -503,7 +502,7 @@ shortest possible list of "b"s? Again, the empty list: no "b"s
 whatsoever in that.  So the most basic information our definition
 needs to contain is
 \begin{LPNcodedisplay}
-a2b([],[]).
+?- a2b([],[]).
 \end{LPNcodedisplay}
 This records the obvious fact that the empty list contains exactly as
 many "a"s as "b"s. But although obvious, this fact turns out
@@ -518,7 +517,7 @@ first list is an "a", and the head of the second list is a
 of "a"s and "b"s of exactly the same length!  This
 immediately gives us the following rule:
 \begin{LPNcodedisplay}
-a2b([a|Ta],[b|Tb]) :- a2b(Ta,Tb).
+?- a2b([a|Ta],[b|Tb]) :- a2b(Ta,Tb).
 \end{LPNcodedisplay}
 This says: the "a2b/2" predicate should succeed if its
 first argument is a list with head "a", its second argument is a
@@ -531,7 +530,7 @@ list, the recursive clause dealing with non-empty lists.  But how does
 it work in practice? That is, what is its procedural meaning?  For
 example, if we pose the query
 \begin{LPNcodedisplay}
-a2b([a,a,a],[b,b,b]).
+?- a2b([a,a,a],[b,b,b]).
 \end{LPNcodedisplay}
 Prolog will say yes, which is what we want --- but \LPNemph{why} exactly does
 this happen?
@@ -542,32 +541,32 @@ rule. Now, the query does match the rule (after all, the head of the
 first list is "a" and the head of the second is "b") so
 Prolog now has a new goal, namely
 \begin{LPNcodedisplay}
-a2b([a,a],[b,b]).
+?- a2b([a,a],[b,b]).
 \end{LPNcodedisplay}
 Once again, the fact does not help with this, but the recursive rule
 can be used again, leading to the following goal:
 \begin{LPNcodedisplay}
-a2b([a],[b]).
+?- a2b([a],[b]).
 \end{LPNcodedisplay}
 Yet again the fact does not help, but the recursive rule does, so we
 get the following goal:
 \begin{LPNcodedisplay}
-a2b([],[]).
+?- a2b([],[]).
 \end{LPNcodedisplay}
 At last we can use the fact: this tells us that, yes, we really do
 have two lists here that contain exactly the same number of "a"s
 and "b"s (namely, none at all). And because this goal succeeds,
 this means that the goal
 \begin{LPNcodedisplay}
-a2b([a],[b]).
+?- a2b([a],[b]).
 \end{LPNcodedisplay}
 succeeds too. This in turn means that the goal
 \begin{LPNcodedisplay}
-a2b([a,a],[b,b]).
+?- a2b([a,a],[b,b]).
 \end{LPNcodedisplay}
 succeeds, and thus that the original goal
 \begin{LPNcodedisplay}
-a2b([a,a,a],[b,b,b]).
+?- a2b([a,a,a],[b,b,b]).
 \end{LPNcodedisplay}
 is satisfied.
 
@@ -586,24 +585,24 @@ recursion, and ensured that the original query succeeded.
 It's is also important to think about what  happens with queries
 that \LPNemph{fail}. For example, if we pose the query
 \begin{LPNcodedisplay}
-a2b([a,a,a,a],[b,b,b]).
+?- a2b([a,a,a,a],[b,b,b]).
 \end{LPNcodedisplay}
 Prolog will correctly say no. Why? because after carrying out the
 peel-off-the-head-and-recursively-examine-the-tail process three
 times, it will be left with the query
 \begin{LPNcodedisplay}
-a2b([a],[]).
+?- a2b([a],[]).
 \end{LPNcodedisplay}
 But this goal cannot be satisfied.
 And if we pose the query
 \begin{LPNcodedisplay}
-a2b([a,c,a,a],[b,b,5,4]).
+?- a2b([a,c,a,a],[b,b,5,4]).
 \end{LPNcodedisplay}
 after carrying out the
 peel-off-the-head-and-recursively-examine-the-tail process once,
 Prolog will have the goal
 \begin{LPNcodedisplay}
-a2b([c,a,a],[b,5,4]).
+?- a2b([c,a,a],[b,5,4]).
 \end{LPNcodedisplay}
 and again, this cannot be satisfied.
 
@@ -614,7 +613,7 @@ input. And with "a2b/2" something interesting happens: it
 acts as a translator, translating lists of "a"s to lists of
 "b"s, and vice versa.  For example the query
 \begin{LPNcodedisplay}
-a2b([a,a,a,a],X).
+?- a2b([a,a,a,a],X).
 \end{LPNcodedisplay}
 yields the response
 \begin{LPNcodedisplay}
@@ -625,14 +624,14 @@ That is, the list of "a"s has been translated to a list of
 position, we can use it to translate lists of "b"s
 to lists of "a"s:
 \begin{LPNcodedisplay}
-a2b(X,[b,b,b,b]).
+?- a2b(X,[b,b,b,b]).
 
-X = [a,a,a,a]
+?- X = [a,a,a,a]
 \end{LPNcodedisplay}
 
 And of course, we can use variables in both argument positions:
 \begin{LPNcodedisplay}
-a2b(X,Y).
+?- a2b(X,Y).
 \end{LPNcodedisplay}
 Can you work out what happens in this case?
 
