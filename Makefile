@@ -1,7 +1,7 @@
 html:
 	LANG=C scripts/_generate_html
 
-print clean:
+print: clean
 	LANG=C scripts/_run
 
 
@@ -20,6 +20,8 @@ clean:
 distclean:  clean
 	rm -rf www/html
 	rm -f text/chap*-*.ps
-	
+
 fresh: distclean html
 
+test:
+	python -m unittest discover

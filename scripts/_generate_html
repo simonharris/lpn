@@ -49,36 +49,27 @@ convertlatex()
 
 adjusthtml()
 {
-    pushd .
-    cd ${OUTDIR}
+
     for HTML in `ls ${OUTDIR}*.html`; do
         echo "Adjusting: ${HTML}"
-        perl -0777 -ne 'print $1 if /<body\s*>(.*?)<\/body>/s' ${HTML} > temp.html
-
-        # This strips anchor/fragment links, and ruins the code snippets
+        #perl -0777 -ne 'print $1 if /<body\s*>(.*?)<\/body>/s' ${HTML} > temp.html
+        #
         # cat temp.html \
-        #     | tr "\n" " " \
         #     | tr -s " " \
-        #     | sed "s/</\n</g" \
-        #     | sed 's/<a href="/<a href="lpnpage.php?pagetype=html\&pageid=/g' \
-        #         | sed 's/\.html.*"/"/' \
-        #         | sed 's/<img src="/<img src="html\//' \
+        #     | sed 's/href="/href="lpnpage.php?pagetype=html\&pageid=/g' \
+        #     | sed 's/\.html//g' \
+        #     | sed 's/src="/src="html\//g' \
+        #     | sed 's/class="fancyvrb"/class="source swish"/g' \
         #     | sed 's/Exercise/<strong>Exercise<\/strong>/g' \
         #     > ${HTML}
-
-        # Adds .swish
-        cat temp.html \
-            | tr -s " " \
-            | sed 's/href="/href="lpnpage.php?pagetype=html\&pageid=/g' \
-            | sed 's/\.html//g' \
-            | sed 's/src="/src="html\//g' \
-            | sed 's/class="fancyvrb"/class="source swish"/g' \
-            | sed 's/Exercise/<strong>Exercise<\/strong>/g' \
-            > ${HTML}
-
-
-        rm -f temp.html
+        python scripts/adjust.py ${HTML} > "${HTML}.new"
+        mv "${HTML}.new" ${HTML}
+        #rm -f temp.html
     done
+
+
+    pushd .
+    cd ${OUTDIR}
     # Generating a new online.php file
     cat lpn-html.html \
 	| tr "\n" " " \
