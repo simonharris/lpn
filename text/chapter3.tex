@@ -47,11 +47,11 @@ At first glance this seems pretty ordinary: it's just a knowledge base
 containing three facts and two rules.  But the definition of the
 "is\_digesting/2" predicate is \LPNterm{recursive}.  Note that
 "is\_digesting/2" is (at least partially) defined in terms of itself,
-for the "is\_digesting/2" functor occurs in both the head and body of
+for the ``is\_digesting/2" functor occurs in both the head and body of
 the second rule.  Crucially, however, there is an `escape' from this
-circularity.  This is provided by the "just\_ate/2" predicate, which
+circularity.  This is provided by the ``just\_ate/2" predicate, which
 occurs in the first rule.  (Significantly, the body of the first rule
-makes no mention of "is\_digesting/2".)  Let's now consider both the
+makes no mention of ``is\_digesting/2".)  Let's now consider both the
 \LPNterm{declarative} and \LPNterm{procedural} meanings of this definition.
 
 The word ``declarative'' is used to talk about the logical meaning of
@@ -61,13 +61,13 @@ it as a collection of logical statements''.  And the declarative
 meaning of this recursive definition is fairly straightforward.  The
 first clause (the escape clause, the one that is not recursive, or
 as we shall usually call it, the \LPNterm{base clause}), simply says
-that: \LPNemph{if} "X" has just eaten "Y", \LPNemph{then} "X" is now
-digesting "Y".  This is obviously a sensible definition.
+that: \LPNemph{if} ``X" has just eaten ``Y", \LPNemph{then} ``X" is now
+digesting ``Y".  This is obviously a sensible definition.
 
 So what about the second clause, the \LPNterm{recursive clause}?  This
-says that: \LPNemph{if} "X" has just eaten "Z"
-\LPNemph{and} "Z" is digesting "Y", \LPNemph{then} "X"
-is digesting "Y", too. Again, this is obviously a sensible
+says that: \LPNemph{if} ``X" has just eaten ``Z"
+\LPNemph{and} ``Z" is digesting ``Y", \LPNemph{then} ``X"
+is digesting ``Y", too. Again, this is obviously a sensible
 definition.
 
 So now we know what this recursive definition says, but what happens
@@ -76,14 +76,14 @@ is, what does this definition actually do?  To use the normal Prolog
 terminology, what is its procedural meaning?
 
 This is also reasonably straightforward.  The base rule is like all
-the earlier rules we've seen.  That is, if we ask whether "X" is
-digesting "Y", Prolog can use this rule to ask instead
-the question: has "X" just eaten "Y"?
+the earlier rules we've seen.  That is, if we ask whether ``X" is
+digesting ``Y", Prolog can use this rule to ask instead
+the question: has ``X" just eaten ``Y"?
 
 What about the recursive clause?  This gives Prolog another strategy
-for determining whether "X" is digesting "Y":
-\LPNemph{it can try to find some} "Z" \LPNemph{such that} "X"
-\LPNemph{has just eaten} "Z", and "Z" \LPNemph{is digesting}
+for determining whether ``X" is digesting ``Y":
+\LPNemph{it can try to find some} ``Z" \LPNemph{such that} ``X"
+\LPNemph{has just eaten} ``Z", and ``Z" \LPNemph{is digesting}
 "Y".  That is, this rule lets Prolog break the task
 apart into two subtasks.  Hopefully, doing so will eventually lead to
 simple problems which can be solved by simply looking up the answers
@@ -100,10 +100,10 @@ Let's see how this works. If we pose the query:
 ?- is_digesting(stork,mosquito).
 \end{LPNcodedisplay}
 then Prolog goes to work as follows.  First, it tries to make use of
-the first rule listed concerning "is\_digesting"; that is, the
-base rule.  This tells it that "X" is digesting
-"Y" if "X" just ate "Y", By unifying
-"X" with "stork" and "Y" with
+the first rule listed concerning ``is\_digesting"; that is, the
+base rule.  This tells it that ``X" is digesting
+"Y" if ``X" just ate ``Y", By unifying
+"X" with ``stork" and ``Y" with
 "mosquito" it obtains the following goal:
 \begin{LPNcodedisplay}
 just_ate(stork,mosquito).
@@ -113,7 +113,7 @@ just_ate(stork,mosquito).
 But the knowledge base doesn't contain the information that the stork
 just ate the mosquito, so this
 attempt fails.  So Prolog next tries to make use of the second rule.
-By unifying "X" with "stork" and "Y" with
+By unifying ``X" with ``stork" and ``Y" with
 "mosquito" it obtains the following goals:
 \begin{LPNcodedisplay}
 just_ate(stork,Z),
@@ -121,7 +121,7 @@ is_digesting(Z,mosquito).
 \end{LPNcodedisplay}
 That is, to show
 "is\_digesting(stork,mosquito)", Prolog
-needs to find a value for "Z" such that, firstly,
+needs to find a value for ``Z" such that, firstly,
 \begin{LPNcodedisplay}
 just_ate(stork,Z).
 \end{LPNcodedisplay}
@@ -129,7 +129,7 @@ and secondly,
 \begin{LPNcodedisplay}
 is_digesting(Z,mosquito).
 \end{LPNcodedisplay}
-And there \LPNemph{is} such a value for "Z", namely
+And there \LPNemph{is} such a value for ``Z", namely
 "frog".  It is immediate that
 \begin{LPNcodedisplay}
 just_ate(stork,frog).
@@ -138,7 +138,7 @@ will succeed, for this fact is listed in the knowledge base.  And deducing
 \begin{LPNcodedisplay}
 is_digesting(frog,mosquito).
 \end{LPNcodedisplay}
-is almost as simple, for the first clause of "is\_digesting/2"
+is almost as simple, for the first clause of ``is\_digesting/2"
 reduces this goal to deducing
 \begin{LPNcodedisplay}
 just_ate(frog,mosquito).
@@ -169,13 +169,13 @@ For consider what happens when we pose the following query:
 \begin{LPNcodedisplay}
 ?- p.
 \end{LPNcodedisplay}
-Prolog asks itself: ``How do I prove "p"?''  and it realises, ``Hey,
-I've got a rule for that!  To prove "p" I just need to prove "p"!''.
-So it asks itself (again): ``How do I prove "p"?''  and it realises,
-``Hey, I've got a rule for that!  To prove "p" I just need to prove
-"p"!''.  So it asks itself (yet again): ``How do I prove "p"?''  and
-it realises, ``Hey, I've got a rule for that!  To prove "p" I just
-need to prove "p"!''  and so on and so forth.
+Prolog asks itself: ``How do I prove ``p"?''  and it realises, ``Hey,
+I've got a rule for that!  To prove ``p" I just need to prove ``p"!''.
+So it asks itself (again): ``How do I prove ``p"?''  and it realises,
+``Hey, I've got a rule for that!  To prove ``p" I just need to prove
+"p"!''.  So it asks itself (yet again): ``How do I prove ``p"?''  and
+it realises, ``Hey, I've got a rule for that!  To prove ``p" I just
+need to prove ``p"!''  and so on and so forth.
 
 If you make this query, Prolog won't answer you: it will head off,
 looping desperately away in an unending search.  That is, it won't
@@ -278,11 +278,11 @@ descend(X,Y) :- child(X,Z),
 
 
 What does this say?  The declarative meaning of the base clause
-is: \LPNemph{if} "Y" is a child of "X", \LPNemph{then} "Y" is a
-descendant of "X". Obviously sensible.
+is: \LPNemph{if} ``Y" is a child of ``X", \LPNemph{then} ``Y" is a
+descendant of ``X". Obviously sensible.
 So what about the recursive clause?  Its declarative meaning is:
-\LPNemph{if} "Z" is a child of "X", \LPNemph{and} "Y" is a
-descendant of "Z", \LPNemph{then} "Y" is a descendant of
+\LPNemph{if} ``Z" is a child of ``X", \LPNemph{and} ``Y" is a
+descendant of ``Z", \LPNemph{then} ``Y" is a descendant of
 "X". Again, this is obviously true.
 
 So let's now look at the procedural meaning of this recursive
@@ -291,8 +291,8 @@ the query:
 \begin{LPNcodedisplay}
 descend(anne,donna)
 \end{LPNcodedisplay}
-Prolog first tries the first rule. The variable "X" in the head
-of the rule is unified with "anne" and "Y" with "donna"  and
+Prolog first tries the first rule. The variable ``X" in the head
+of the rule is unified with ``anne" and ``Y" with ``donna"  and
 the next goal Prolog tries to prove is
 
 \begin{LPNcodedisplay}
@@ -301,7 +301,7 @@ child(anne,donna)
 
 
 This attempt fails, however, since the knowledge base
-neither contains the fact "child(anne,donna)" nor any rules
+neither contains the fact ``child(anne,donna)" nor any rules
 that would allow to infer it.
 So Prolog backtracks and looks for an alternative way of proving
 "descend(anne,donna)". It finds the second rule in the
@@ -314,8 +314,8 @@ descend(_633,donna).
 
 
 Prolog takes the first subgoal and tries to unify  it with something in
-the knowledge base. It finds the fact "child(anne,bridget)"
-and the variable "\_633" gets instantiated to "bridget".
+the knowledge base. It finds the fact ``child(anne,bridget)"
+and the variable ``\_633" gets instantiated to ``bridget".
 Now that the first subgoal is satisfied, Prolog moves to the
 second subgoal. It has to prove
 
@@ -324,14 +324,14 @@ descend(bridget,donna)
 \end{LPNcodedisplay}
 
 
-This is the first recursive call of the predicate "descend/2". As
+This is the first recursive call of the predicate ``descend/2". As
 before, Prolog starts with the first rule, but fails, because the goal
 
 \begin{LPNcodedisplay}
 child(bridget,donna)
 \end{LPNcodedisplay}
 cannot be proved. Backtracking, Prolog finds that there is a second
-possibility to be checked for "descend(bridget,donna)", namely the
+possibility to be checked for ``descend(bridget,donna)", namely the
 second rule, which again gives Prolog two new subgoals:
 
 \begin{LPNcodedisplay}
@@ -342,13 +342,13 @@ descend(_1785,donna).
 
 The first one can be unified with the fact
 "child(bridget,caroline)" of the knowledge base, so that the
-variable "\_1785" is instantiated with "caroline". Next Prolog
+variable ``\_1785" is instantiated with ``caroline". Next Prolog
 tries to prove
 
 \begin{LPNcodedisplay}
 descend(caroline,donna).
 \end{LPNcodedisplay}
-This is the second recursive call of predicate "descend/2".
+This is the second recursive call of predicate ``descend/2".
 As before, it tries the first rule first, obtaining the following new
 goal:
 
@@ -357,10 +357,10 @@ child(caroline,donna)
 \end{LPNcodedisplay}
 
 
-This time Prolog succeeds, since "child(caroline,donna)" is a
+This time Prolog succeeds, since ``child(caroline,donna)" is a
 fact in the database. Prolog has found a proof for the goal
 "descend(caroline,donna)" (the second recursive call). But this
-means that "descend(bridget,donna)" (the first recursive call)
+means that ``descend(bridget,donna)" (the first recursive call)
 is also true, which means that our original query
 "descend(anne,donna)" is true as well.
 
@@ -449,14 +449,14 @@ numeral(succ(X)) :- numeral(X).
 \end{LPNcodedisplay}
 So if we pose queries like
 \begin{LPNcodedisplay}
-numeral(succ(succ(succ(0)))).
+?- numeral(succ(succ(succ(0)))).
 \end{LPNcodedisplay}
-we get the answer yes.
+we get the answer ``yes''.
 
 But we can do some more interesting things.  Consider what happens when
 we pose the following query:
 \begin{LPNcodedisplay}
-numeral(X).
+?- numeral(X).
 \end{LPNcodedisplay}
 That is, we're saying ``Ok, show me some numerals''.  Then we can have
 the following dialogue with Prolog:
@@ -508,7 +508,7 @@ proved useful in such applications.
 As a final example, let's see whether we can use the representation of
 numerals that we introduced in the previous section for doing simple
 arithmetic. Let's try to define addition. That is, we want to define a
-predicate "add/3" which when given two numerals as the
+predicate ``add/3" which when given two numerals as the
 first and second argument returns the result of adding them up as its
 third argument. For example:
 \begin{LPNcodedisplay}
@@ -520,8 +520,8 @@ Y = succ(succ(succ(0)))
 \end{LPNcodedisplay}
 
 There are two things which are important to notice:
-\begin{enumerate}
-\item{}Whenever the first argument is "0", the third argument has
+
+1. Whenever the first argument is ``0", the third argument has
 to be the same as the second argument:
 \begin{LPNcodedisplay}
 ?- add(0,succ(succ(0)),Y).
@@ -531,17 +531,18 @@ Y = 0
 \end{LPNcodedisplay}
 
 This is the case that we want to use for the base clause.
-\item{}Assume that we want to add the two numerals "X" and "Y"
-(for example  "succ(succ(succ(0)))" and "succ(succ(0))") and that
-"X" is not "0". Now, if
-"X1" is the numeral that has one "succ" functor less than
-"X" (that is, "succ(succ(0))" in our example) and if we know the
-result -- let's call it "Z" -- of adding "X1" and "Y"
-(namely "succ(succ(succ(succ(0))))"), then it is very easy to
-compute the result of adding "X" and "Y": we just have to
-add one "succ"-functor to "Z". This is what we want to
+
+2. Assume that we want to add the two numerals ``X" and ``Y"
+(for example  ``succ(succ(succ(0)))" and ``succ(succ(0))") and that
+"X" is not ``0". Now, if
+"X1" is the numeral that has one ``succ" functor less than
+"X" (that is, ``succ(succ(0))" in our example) and if we know the
+result -- let's call it ``Z" -- of adding ``X1" and ``Y"
+(namely ``succ(succ(succ(succ(0))))"), then it is very easy to
+compute the result of adding ``X" and ``Y": we just have to
+add one ``succ"-functor to ``Z". This is what we want to
 express with the recursive clause.
-\end{enumerate}
+
 
 Here is the predicate definition that expresses exactly what we just said:
 \begin{LPNcodedisplay}
@@ -558,35 +559,35 @@ ask:
  Let's go step by step through the way Prolog processes this
 query. The trace and search tree for the query are given below.
 
-The first argument is not "0", which means that only the second clause
-for "add/3" can be used. This leads to a recursive call of "add/3". The
-outermost "succ" functor is stripped off the first argument of the
+The first argument is not ``0", which means that only the second clause
+for ``add/3" can be used. This leads to a recursive call of ``add/3". The
+outermost ``succ" functor is stripped off the first argument of the
 original query, and the result becomes the first argument of the
 recursive query. The second argument is passed on unchanged to the
 recursive query, and the third argument of the recursive query is a
-variable, the internal variable "\_G648" in the trace given below. Note
-that "\_G648" is not instantiated yet. However it shares values with
+variable, the internal variable ``\_G648" in the trace given below. Note
+that ``\_G648" is not instantiated yet. However it shares values with
 "R" (the variable that we used as the third argument in the original
-query) because "R" was instantiated to "succ(\_G648)" when the query
+query) because ``R" was instantiated to ``succ(\_G648)" when the query
 was unified with the head of the second clause. But that means that
 "R" is not a completely uninstantiated variable anymore. It is now a
 complex term, that has a (uninstantiated) variable as its argument.
 
 The next two steps are essentially the same. With every step the first
-argument becomes one layer of "succ" smaller; both the trace and the
-search tree given below show this nicely.  At the same time, a "succ"
-functor is added to "R" at every step, but always leaving
+argument becomes one layer of ``succ" smaller; both the trace and the
+search tree given below show this nicely.  At the same time, a ``succ"
+functor is added to ``R" at every step, but always leaving
 the innermost variable uninstantiated. After the first recursive
-call "R" is "succ(\_G648)".  After the second recursive call, "\_G648"
-is instantiated with "succ(\_G650)", so that "R" is "succ(succ(\_G650)".
-After the third recursive call, "\_G650" is instantiated with
-"succ(\_G652)" and "R" therefore becomes "succ(succ(succ(\_G652)))". The
+call ``R" is ``succ(\_G648)".  After the second recursive call, ``\_G648"
+is instantiated with ``succ(\_G650)", so that ``R" is ``succ(succ(\_G650)".
+After the third recursive call, ``\_G650" is instantiated with
+"succ(\_G652)" and ``R" therefore becomes ``succ(succ(succ(\_G652)))". The
 search tree shows this step by step instantiation.
 
-At this stage all "succ" functors have been stripped off the first
+At this stage all ``succ" functors have been stripped off the first
 argument and we can apply the base clause. The third argument is
 equated with the second argument, so the  `hole' (the
-uninstantiated variable) in the complex term "R" is finally filled,
+uninstantiated variable) in the complex term ``R" is finally filled,
 and we are through.
 
 Here's the complete trace of our query:
@@ -641,12 +642,12 @@ right, and uses backtracking to recover from bad choices. These
 procedural aspects have an important influence on what actually
 happens when you make a query. We have already seen a dramatic example
 of a mismatch between the procedural and declarative meaning of a
-knowledge base (remember the "p:- p" program?), and as we shall now
+knowledge base (remember the ``p:- p" program?), and as we shall now
 see, it is easy to define knowledge bases which (read logically)
 describe the same situations, but which behave very differently.
 Let's consider the matter.
 
-Recall our earlier descendant program (let's call it "descend1.pl"):
+Recall our earlier descendant program (let's call it ``descend1.pl"):
 \begin{LPNcodedisplay}
 child(anne,bridget).
 child(bridget,caroline).
@@ -660,7 +661,7 @@ descend(X,Y) :- child(X,Z),
 \end{LPNcodedisplay}
 
 
-We'll make one change to it, and call the result "descend2.pl":
+We'll make one change to it, and call the result ``descend2.pl":
 \begin{LPNcodedisplay}
 child(anne,bridget).
 child(bridget,caroline).
@@ -677,12 +678,12 @@ All we have done is change the \LPNterm{rule order}. So if we read the
 program as a purely logical definition, nothing has changed.  But does
 the change give rise to procedural differences?  Yes, but nothing
 significant. For example, if you work through the examples you
-will see that the first solution that "descend1.pl" finds is
+will see that the first solution that ``descend1.pl" finds is
 \begin{LPNcodedisplay}
 X = anne
 Y = bridget
 \end{LPNcodedisplay}
-whereas the first solution that "descend2.pl" finds is
+whereas the first solution that ``descend2.pl" finds is
 \begin{LPNcodedisplay}
 X = anne
 Y = emily
@@ -693,8 +694,8 @@ general point. Roughly speaking (we'll add a caveat later on) changing
 the order of rules in a Prolog program does not change (up to the
 order in which solutions are found) the program's behaviour.
 
-So let's move on. We'll make one small change to "descend2.pl", and
-call the result "descend3.pl":
+So let's move on. We'll make one small change to ``descend2.pl", and
+call the result ``descend3.pl":
 \begin{LPNcodedisplay}
 child(anne,bridget).
 child(bridget,caroline).
@@ -715,7 +716,7 @@ the same thing as the previous two versions. But this time the
 program's behaviour has changed dramatically.  For example, if you
 pose the query
 \begin{LPNcodedisplay}
-descend(anne,emily).
+?- descend(anne,emily).
 \end{LPNcodedisplay}
 you will get an error message (``out of local stack'', or something
 similar). Prolog is looping. Why?  Well, in order to satisfy the query
@@ -724,14 +725,14 @@ its next goal will be to satisfy the query
 \begin{LPNcodedisplay}
 descend(W1,emily)
 \end{LPNcodedisplay}
-for some new variable "W1". But to satisfy this new goal, Prolog
+for some new variable ``W1". But to satisfy this new goal, Prolog
 again has to use the first rule, and this means that its next goal is
 going to be
 \begin{LPNcodedisplay}
 descend(W2,emily)
 \end{LPNcodedisplay}
-for some new variable "W2". And of course, this in turn means that its
-next goal is going to be "descend(W3,emily)" and then
+for some new variable ``W2". And of course, this in turn means that its
+next goal is going to be ``descend(W3,emily)" and then
 "descend(W4,emily)", and so on.  That is, the (at first glance
 innocuous) change in the goal order has resulted in procedural
 disaster.  To use the standard terminology, we have here a classic
@@ -759,25 +760,25 @@ descend(X,Y) :- child(X,Y).
 descend(X,Y) :- descend(Z,Y),
                  child(X,Z).
 \end{LPNcodedisplay}
-This program is "descend3.pl" with the rule ordering
+This program is ``descend3.pl" with the rule ordering
 reversed.  Now (once again) this program has the same declarative
 meaning as the other variants, but it is also procedurally different from
 its relatives. First, and most obviously, it is very different
-procedurally from both "descend1.pl" and "descend2.pl".  In
+procedurally from both ``descend1.pl" and ``descend2.pl".  In
 particular, because it contains a left recursive rule, this new
 program does not terminate on some input.  For example (just like
 "descend3.pl") this new program does not terminate when we pose the
 query
 \begin{LPNcodedisplay}
-descend(anne,emily).
+?- descend(anne,emily).
 \end{LPNcodedisplay}
-But "descend4.pl" is not procedurally identical to "descend3.pl".
+But ``descend4.pl" is not procedurally identical to ``descend3.pl".
 The rule ordering reversal does make a difference. For example,
 "descend3.pl" will not terminate if we pose the query
 \begin{LPNcodedisplay}
-descend(anne,bridget).
+?- descend(anne,bridget).
 \end{LPNcodedisplay}
-However "descend4.pl" will terminate in this case, for the rule
+However ``descend4.pl" will terminate in this case, for the rule
 reversal enables it to apply the non-recursive rule and halt. So when
 it comes to non-terminating programs, rule ordering changes can lead
 to some extra solutions being found. Nonetheless, goal ordering, not
@@ -789,16 +790,16 @@ some extra solutions.
 
 Summing up, our four variant descendant programs are Prolog knowledge
 bases which describe exactly the same situations, but behave
-differently.  The difference in behaviour between "descend1.pl" and
-"descend2.pl" (which differ only in the way rules are ordered) is
+differently.  The difference in behaviour between ``descend1.pl" and
+``descend2.pl" (which differ only in the way rules are ordered) is
 relatively minor: they generate the same solutions, but in a different
-order.  But "descend3.pl" and "descend4.pl" are procedurally very
+order.  But ``descend3.pl" and ``descend4.pl" are procedurally very
 different from their two cousins, and this is because they differ from
 them in the way their goals are ordered.  In particular, both these
 variants contain left recursive rules, and in both cases this leads to
 non-terminating behaviour.  The change in rule ordering
-between "descend3.pl" and "descend4.pl" merely means that
-"descend4.pl" will terminate in some cases where "descend3.pl" will
+between ``descend3.pl" and ``descend4.pl" merely means that
+``descend4.pl" will terminate in some cases where ``descend3.pl" will
 not.
 
 
@@ -816,7 +817,7 @@ that is identical (modulo variable names) with the goal given in the head.
 Rather, place such goals (which trigger recursive calls) as far as possible
 towards the right of the tail. That is, place them after the goals which test
 for the various (non-recursive) termination conditions. Doing this gives
-Prolog a sporting chance of fighting it's way through your recursive
+Prolog a sporting chance of fighting its way through your recursive
 definitions to find solutions.
 
 
@@ -846,11 +847,11 @@ ones?  Here is a schematic picture:
 
 \includegraphics[width=4cm]{dolls.eps}
 
-First, write a knowledge base using the predicate "directlyIn/2" which
+First, write a knowledge base using the predicate ``directlyIn/2" which
 encodes which doll is directly contained in which other doll.  Then,
-define a recursive predicate "in/2", that tells us which doll is
+define a recursive predicate ``in/2", that tells us which doll is
 (directly or indirectly) contained in which other dolls. For example,
-the query "in(katarina,natasha)" should evaluate to true, while
+the query ``in(katarina,natasha)" should evaluate to true, while
 "in(olga, katarina)" should fail.
 \end{LPNexercise}
 
@@ -869,16 +870,16 @@ directTrain(nancy,metz).
 That is, this knowledge base holds facts about towns it is possible to
 travel between by taking a \LPNemph{direct} train.  But of course, we can
 travel further by chaining together direct train journeys.  Write a
-recursive predicate "travelFromTo/2" that tells us when we can
+recursive predicate ``travelFromTo/2" that tells us when we can
 travel by train between two towns.  For example, when given the query
 \begin{LPNcodedisplay}
-travelFromTo(nancy,saarbruecken).
+?- travelFromTo(nancy,saarbruecken).
 \end{LPNcodedisplay}
-it should reply yes.
+it should reply ``yes''.
 \end{LPNexercise}
 
 
-\begin{LPNexercise}{L3.EX2}Define a predicate "greater\_than/2"
+\begin{LPNexercise}{L3.EX2}Define a predicate ``greater\_than/2"
 that takes two numerals in the notation that we introduced in the text
 (that is, 0, succ(0), succ(succ(0)), and so on) as arguments and
 decides whether the first one is greater than the second one. For example:
@@ -892,17 +893,17 @@ no
 \begin{LPNexercise}{L3.EX4}Binary trees
 are trees where all internal nodes have exactly two children. The
 smallest binary trees consist of only one leaf node. We will represent
-leaf nodes as "leaf(Label)". For instance, "leaf(3)" and "leaf(7)" are
+leaf nodes as ``leaf(Label)". For instance, ``leaf(3)" and ``leaf(7)" are
 leaf nodes, and therefore small binary trees. Given two binary trees
-"B1" and "B2" we can combine them into one binary tree using the
-functor "tree/2" as follows: "tree(B1,B2)".  So, from the leaves
-"leaf(1)" and "leaf(2)" we can build the binary tree
-"tree(leaf(1),leaf(2))". And from the binary trees
-"tree(leaf(1),leaf(2))" and "leaf(4)" we can build the binary tree
-"tree(tree(leaf(1), leaf(2)),leaf(4))".
+"B1" and ``B2" we can combine them into one binary tree using the
+functor ``tree/2" as follows: ``tree(B1,B2)".  So, from the leaves
+``leaf(1)" and ``leaf(2)" we can build the binary tree
+``tree(leaf(1),leaf(2))". And from the binary trees
+``tree(leaf(1),leaf(2))" and ``leaf(4)" we can build the binary tree
+``tree(tree(leaf(1), leaf(2)),leaf(4))".
 
 
-Now, define a predicate "swap/2", which produces the mirror
+Now, define a predicate ``swap/2", which produces the mirror
 image of the binary tree that is its first argument. For example:
 \begin{LPNcodedisplay}
 ?- swap(tree(tree(leaf(1), leaf(2)), leaf(4)),T).
@@ -934,26 +935,26 @@ the difference between termination and non-termination. So:
 \begin{enumerate}
 
 
-\item{} Load "descend1.pl", turn on "trace", and pose the query
-"descend(anne,emily)". Count how many steps it takes Prolog to work
+\item{} Load ``descend1.pl", turn on ``trace", and pose the query
+``descend(anne,emily)". Count how many steps it takes Prolog to work
 out the answer (that is, how many times do you have to hit the return
-key).  Now turn "trace" off and pose the query "descend(X,Y)". How
+key).  Now turn ``trace" off and pose the query ``descend(X,Y)". How
 many answers are there?
 
-\item{}Load "descend2.pl". This is the variant of "descend1.pl" with
+\item{}Load ``descend2.pl". This is the variant of ``descend1.pl" with
 the rule order reversed. Repeat the traces you have
-carried out for "descend1.pl", and compare the results.
+carried out for ``descend1.pl", and compare the results.
 
-\item{}Load "descend3.pl". This is the variant of "descend2.pl" in
+\item{}Load ``descend3.pl". This is the variant of ``descend2.pl" in
 which the goal order within the recursive rule is switched, resulting
 in a left recursive rule.  Because of this, even for such simple
-queries as "descend(anne,bridget)", Prolog will not terminate.  Step
-through an example, using "trace", to confirm this.
+queries as ``descend(anne,bridget)", Prolog will not terminate.  Step
+through an example, using ``trace", to confirm this.
 
-\item{}Load "descend4.pl". This is the variant of "descend3.pl"
-obtained by switching the rule order.  So "descend4.pl" also contains
+\item{}Load ``descend4.pl". This is the variant of ``descend3.pl"
+obtained by switching the rule order.  So ``descend4.pl" also contains
 a left recursive rule, and does not terminate on all input.  But it
-does terminate on some input where "descend3.pl" does not.  Which
+does terminate on some input where ``descend3.pl" does not.  Which
 extra solutions does it find?
 
 \end{enumerate}
@@ -961,13 +962,13 @@ extra solutions does it find?
 As we said in the text, goal ordering, not rule ordering is
 what is truly  procedurally significant.  But with non-terminating programs,
 rule ordering changes can have unexpected effects.  Recall the
-successor program discussed in the text (let's call it "numeral1.pl"):
+successor program discussed in the text (let's call it ``numeral1.pl"):
 \begin{LPNcodedisplay}
 numeral(0).
 numeral(succ(X)) :- numeral(X).
 \end{LPNcodedisplay}
 Let's  swap the order of the two clauses, and
-call the result "numeral2.pl":
+call the result ``numeral2.pl":
 \begin{LPNcodedisplay}
 numeral(succ(X)) :- numeral(X).
 numeral(0).
@@ -978,28 +979,28 @@ differences, if any?
 
 \begin{enumerate}
 
-\item{} Create a file containing "numeral2.pl", load it, and
+\item{} Create a file containing ``numeral2.pl", load it, and
 investigate what happens if we pose  queries about
 \LPNemph{specific} numerals.
 For example, suppose we ask:
 \begin{LPNcodedisplay}
 numeral(succ(succ(succ(0)))).
 \end{LPNcodedisplay}
-Do "numeral1.pl" and "numeral2.pl" behave in the same way on such
+Do ``numeral1.pl" and ``numeral2.pl" behave in the same way on such
 input?
 
 \item{}
 Second, look at what happens if we try to \LPNemph{generate} numerals, that
 is, suppose we pose the query
 \begin{LPNcodedisplay}
-numeral(X).
+?- numeral(X).
 \end{LPNcodedisplay}
 Do the programs display identical behaviour?
 \end{enumerate}
 
 Here are  some programs for you to try your hand at.
-\begin{enumerate}
-\item{}Imagine that the following knowledge base describes a maze. The facts
+
+1. Imagine that the following knowledge base describes a maze. The facts
 determine which points are connected, that is, from which points you can
 get to which other points in one step. Furthermore, imagine that all
 paths are one-way streets, so that you can only walk them in one
@@ -1027,12 +1028,13 @@ connected(14,17).
 connected(16,19).
 \end{LPNcodedisplay}
 
-Write a predicate "path/2" that tells you from which points
+Write a predicate ``path/2" that tells you from which points
 in the maze you can get to which other points when chaining together
 connections given in the above knowledge base. Can you get from point
 5 to point 10? Which other point can you get to when starting at point
 1? And which points can be reached from point 13?
-\item{}We are given the following knowledge base of travel information:
+
+2. We are given the following knowledge base of travel information:
 \begin{LPNcodedisplay}
 byCar(auckland,hamilton).
 byCar(hamilton,raglan).
@@ -1052,16 +1054,16 @@ byPlane(singapore,auckland).
 byPlane(losAngeles,auckland).
 \end{LPNcodedisplay}
 
-Write a predicate "travel/2" which determines whether it is
+Write a predicate ``travel/2" which determines whether it is
 possible to travel from one place to another by chaining together
 car, train, and plane journeys. For example, your program should answer
-yes to the query "travel(valmont,raglan)".
+yes to the query ``travel(valmont,raglan)".
 
-\item{}So, by using "travel/2" to query the above database, you can
+3. So, by using ``travel/2" to query the above database, you can
 find out that it is possible to go from Valmont to Raglan.  If you are
 planning such a voyage, that's already something useful to know, but
 you would probably prefer to have the precise route from Valmont to
-Raglan.  Write a predicate "travel/3" which tells you which route to
+Raglan.  Write a predicate ``travel/3" which tells you which route to
 take when travelling from one place to another.  For example, the
 program should respond
 \begin{LPNcodedisplay}
@@ -1072,8 +1074,10 @@ X = go(valmont,metz,
 to the query
 "travel(valmont,losAngeles,X)".
 
-\item{}Extend the predicate "travel/3" so that it not only tells you
+4. Extend the predicate ``travel/3" so that it not only tells you
 the route to take to get from one place to another, but also
 \LPNemph{how} you have to travel. That is, the new program should let
 us know, for each stage of the voyage, whether we need to travel by
-car, train, or plane.  \end{enumerate}
+car, train, or plane.
+
+

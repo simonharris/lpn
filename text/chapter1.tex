@@ -70,8 +70,8 @@ party.
 
 
 This collection of facts is KB1. It is our first example of a Prolog program.
-Note that the names "mia", "jody", and "yolanda", the properties "woman" and
-"playsAirGuitar", and the proposition "party" have been written so that the
+Note that the names ``mia'', ``jody'', and ``yolanda'', the properties ``woman'' and
+"playsAirGuitar'', and the proposition ``party'' have been written so that the
 first letter is in lower-case.  This is important; we will see why a little
 later on.
 
@@ -86,11 +86,11 @@ Prolog will answer
 yes
 \end{LPNcodedisplay}
 for the obvious reason that this is one of the facts explicitly
-recorded in KB1.  Incidentally, \LPNemph{we} don't type in the "?-".
+recorded in KB1.  Incidentally, \LPNemph{we} don't type in the ``?-''.
 This symbol (or something like it, depending on the implementation of
 Prolog you are using) is the prompt symbol that the Prolog interpreter
 displays when it is waiting to evaluate a query.  We just type in the
-actual query (for example "woman(mia)") followed by "." (a full stop).
+actual query (for example ``woman(mia)'') followed by ``.'' (a full stop).
 The full stop is important. If you don't type it, Prolog won't start
 working on the query.
 
@@ -113,7 +113,7 @@ Why? Well, first of all, this is not a fact in KB1. Moreover, KB1 is
 extremely simple, and contains no other information (such as the
 \LPNemph{rules} we will learn about shortly) which might help Prolog
 try to \LPNterm{infer} (that is, \LPNterm{deduce}) whether Mia plays air
-guitar. So Prolog correctly concludes that "playsAirGuitar(mia)" does
+guitar. So Prolog correctly concludes that ``playsAirGuitar(mia)'' does
 \LPNemph{not} follow from KB1.
 
 Here are two important examples. First, suppose we pose the query:
@@ -122,18 +122,18 @@ Here are two important examples. First, suppose we pose the query:
 \end{LPNcodedisplay}
 Again Prolog answers no. Why? Well, this query is about a person (Vincent)
 that it has no information about, so it (correctly) concludes that
-"playsAirGuitar(vincent)" cannot be deduced from the information in KB1.
+"playsAirGuitar(vincent)'' cannot be deduced from the information in KB1.
 
 Similarly, suppose we pose the query:
 \begin{LPNcodedisplay}
-?- tatooed(jody).
+?- tattooed(jody).
 \end{LPNcodedisplay}
 Again Prolog will answer no. Why? Well, this query is about a property
-(being tatooed) that it has no information about, so once again it
+(being tattooed) that it has no information about, so once again it
 (correctly) concludes that the query cannot be deduced from the
 information in KB1.  (Actually, some Prolog implementations will
 respond to this query with an error message, telling you that the
-predicate or procedure "tatooed" is not defined; we will soon
+predicate or procedure ``tattooed'' is not defined; we will soon
 introduce the notion of predicates.)
 
 Needless to say, we can also make queries concerning propositions. For example,
@@ -166,24 +166,24 @@ listens2Music(yolanda):- happy(yolanda).
 playsAirGuitar(mia):- listens2Music(mia).
 playsAirGuitar(yolanda):- listens2Music(yolanda).
 \end{LPNcodedisplay}
-There are two facts in KB2, "listens2Music(mia)" and "happy(yolanda)".
+There are two facts in KB2, ``listens2Music(mia)'' and ``happy(yolanda)''.
 The last three items it contains are \LPNterm{rules}.
 
 Rules state information that is \LPNemph{conditionally} true of the
 situation of interest.  For example, the first rule says that Yolanda
 listens to music \LPNemph{if} she is happy, and the last rule says
 that Yolanda plays air guitar \LPNemph{if} she listens to music. More
-generally, the ":-" should be read as ``if'', or ``is implied by''.
-The part on the left hand side of the ":-" is called the \LPNterm{head}
+generally, the ``:-'' should be read as ``if'', or ``is implied by''.
+The part on the left hand side of the ``:-'' is called the \LPNterm{head}
 of the rule, the part on the right hand side is called the
 \LPNterm{body}. So in general rules say: \LPNemph{if} the body of the
 rule is true, \LPNemph{then} the head of the rule is true too.  And
 now for the key point:
 \begin{quote}
 \LPNemph{If a knowledge base contains a rule}
-"head :- body," \LPNemph{and Prolog knows that} "body"
+"head :- body,'' \LPNemph{and Prolog knows that} ``body''
 \LPNemph{follows from the information in the knowledge base, then
-  Prolog can infer} "head."
+  Prolog can infer} ``head.''
 \end{quote}
 This fundamental deduction step is
 called \LPNterm{modus ponens}.
@@ -194,14 +194,14 @@ guitar:
 ?- playsAirGuitar(mia).
 \end{LPNcodedisplay}
 Prolog will respond yes. Why?  Well, although it can't find
-"playsAirGuitar(mia)" as a fact explicitly recorded in KB2, it can find the
+``playsAirGuitar(mia)'' as a fact explicitly recorded in KB2, it can find the
 rule
 \begin{LPNcodedisplay}
 playsAirGuitar(mia):- listens2Music(mia).
 \end{LPNcodedisplay}
-Moreover, KB2 also contains the fact "listens2Music(mia)".  Hence
+Moreover, KB2 also contains the fact ``listens2Music(mia)''.  Hence
 Prolog can use the rule of modus ponens to deduce that
-"playsAirGuitar(mia)".
+``playsAirGuitar(mia)''.
 
 Our next example shows that Prolog can chain together uses of modus
 ponens. Suppose we ask:
@@ -209,11 +209,11 @@ ponens. Suppose we ask:
 ?- playsAirGuitar(yolanda).
 \end{LPNcodedisplay}
 Prolog would respond yes.  Why? Well, first of all, by using the fact
-"happy(yolanda)" and the rule
+"happy(yolanda)'' and the rule
 \begin{LPNcodedisplay}
 listens2Music(yolanda):- happy(yolanda).
 \end{LPNcodedisplay}
-Prolog can deduce the new fact "listens2Music(yolanda)".  This new
+Prolog can deduce the new fact ``listens2Music(yolanda)''.  This new
 fact is not explicitly recorded in the knowledge base --- it is only
 \LPNemph{implicitly} present (it is \LPNemph{inferred} knowledge).
 Nonetheless, Prolog can then use it just like an explicitly recorded
@@ -221,7 +221,7 @@ fact. In particular, from this inferred fact and the rule
 \begin{LPNcodedisplay}
 playsAirGuitar(yolanda):- listens2Music(yolanda).
 \end{LPNcodedisplay}
-it can deduce "playsAirGuitar(yolanda)", which is what we asked it.
+it can deduce ``playsAirGuitar(yolanda)'', which is what we asked it.
 Summing up: any fact produced by an application of modus ponens can be used as
 input to further rules. By chaining together applications of modus ponens in
 this way, Prolog is able to retrieve information that logically follows from
@@ -237,8 +237,8 @@ listens2Music
 happy
 playsAirGuitar
 \end{LPNcodedisplay}
-The "happy" predicate is defined using a single clause (a fact). The
-"listens2Music" and "playsAirGuitar" predicates are each defined using
+The ``happy'' predicate is defined using a single clause (a fact). The
+"listens2Music'' and ``playsAirGuitar'' predicates are each defined using
 two clauses (in one case, two rules, and in the other case, one rule
 and one fact).  It is a good idea to think about Prolog programs in
 terms of the predicates they contain.  In essence, the predicates are
@@ -269,14 +269,13 @@ playsAirGuitar(butch):-
 playsAirGuitar(butch):-
    listens2Music(butch).
 \end{LPNcodedisplay}
-There are two facts,  "happy(vincent)" and
-"listens2Music(butch)", and three rules.
+There are two facts,  ``happy(vincent)'' and ``listens2Music(butch)'', and three rules.
 
 
-KB3 defines the same three predicates as KB2 (namely "happy",
-"listens2Music", and "playsAirGuitar") but it defines them
+KB3 defines the same three predicates as KB2 (namely ``happy'',
+``listens2Music'', and ``playsAirGuitar") but it defines them
 differently.  In particular, the three rules that define the
-"playsAirGuitar" predicate introduce some new ideas. First, note that
+``playsAirGuitar'' predicate introduce some new ideas. First, note that
 the rule\index{PROLOG ,/2@\texttt{,/2}}
 \begin{LPNcodedisplay}
 playsAirGuitar(vincent):-
@@ -285,9 +284,9 @@ playsAirGuitar(vincent):-
 \end{LPNcodedisplay}
 has \LPNemph{two} items in its body, or (to use the standard
 terminology) two \LPNterm{goals}.  So, what exactly does this rule
-mean?  The most important thing to note is the comma "," that
-separates the goal "listens2Music(vincent)" and the goal
-"happy(vincent)" in the rule's body.  This is the way logical
+mean?  The most important thing to note is the comma ``,'' that
+separates the goal ``listens2Music(vincent)'' and the goal
+"happy(vincent)'' in the rule's body.  This is the way logical
 \LPNterm{conjunction} is expressed in Prolog (that is, the comma means
 \LPNemph{and\/}).  So this rule says: ``Vincent plays air guitar if he
 listens to music \LPNemph{and} he is happy''.
@@ -297,10 +296,10 @@ Thus, if we posed the query
 ?- playsAirGuitar(vincent).
 \end{LPNcodedisplay}
 Prolog would answer no.  This is because while KB3 contains
-"happy(vincent)", it does \LPNemph{not} explicitly contain the
-information "listens2Music(vincent)", and this fact cannot be deduced
+"happy(vincent)'', it does \LPNemph{not} explicitly contain the
+information ``listens2Music(vincent)'', and this fact cannot be deduced
 either.  So KB3 only fulfils one of the two preconditions needed to
-establish "playsAirGuitar(vincent)", and our query fails.
+establish ``playsAirGuitar(vincent)'', and our query fails.
 
 Incidentally, the spacing used in this rule is irrelevant. For
 example, we could have written it as
@@ -330,13 +329,13 @@ saying \LPNemph{or}).  So if we posed the query
 \end{LPNcodedisplay}
 Prolog would answer yes. For although the first of these rules
 will not help (KB3 does not allow Prolog to conclude that
-"happy(butch)"), KB3 \LPNemph{does} contain "listens2Music(butch)"
+"happy(butch)''), KB3 \LPNemph{does} contain ``listens2Music(butch)''
 and this means Prolog can apply modus ponens using the rule
 \begin{LPNcodedisplay}
 playsAirGuitar(butch):-
    listens2Music(butch).
 \end{LPNcodedisplay}
-to conclude that "playsAirGuitar(butch)".
+to conclude that ``playsAirGuitar(butch)''.
 
 There is another way of expressing disjunction in Prolog. We could
 replace the pair of rules given above by the single rule\index{PROLOG
@@ -346,7 +345,7 @@ playsAirGuitar(butch):-
    happy(butch);
    listens2Music(butch).
 \end{LPNcodedisplay}
-That is, the semicolon ";" is the Prolog symbol for \LPNemph{or}, so
+That is, the semicolon ``;'' is the Prolog symbol for \LPNemph{or}, so
 this single rule means exactly the same thing as the previous pair of
 rules. Is it better to use multiple rules or the semicolon?  That
 depends. On the one hand, extensive use of semicolon can make Prolog
@@ -354,8 +353,8 @@ code hard to read. On the other hand, the semicolon is more efficient
 as Prolog only has to deal with one rule.
 
 It should now be clear that Prolog has something to do with
-\LPNterm{logic}: after all, the ":-" means implication, the "," means
-conjunction, and the ";" means disjunction.  (What about negation?
+\LPNterm{logic}: after all, the ``:-'' means implication, the ``,'' means
+conjunction, and the ``;'' means disjunction.  (What about negation?
 That is a whole other story. We'll be discussing it in
 Chapter~\ref{CHAPTER10}.)  Moreover, we have seen that a standard
 logical proof rule (modus ponens) plays an important role in Prolog
@@ -382,7 +381,7 @@ loves(honey_bunny,pumpkin).
 
 Now, this is a pretty boring knowledge base. There are no rules, only
 a collection of facts. Ok, we are seeing a relation that has two names
-as arguments for the first time (namely the "loves" relation), but,
+as arguments for the first time (namely the ``loves'' relation), but,
 let's face it, that's a rather predictable idea.
 
 No, the novelty this time lies not in the knowledge base, it lies in
@@ -393,7 +392,7 @@ example:
 ?- woman(X).
 \end{LPNcodedisplay}
 
-The "X" is a variable (in fact, any word beginning with an upper-case
+The ``X'' is a variable (in fact, any word beginning with an upper-case
 letter is a Prolog variable, which is why we had to be careful to use
 lower-case initial letters in our earlier examples).  Now a variable
 isn't a name, rather it's a \LPNemph{placeholder} for
@@ -403,12 +402,12 @@ individuals you know about is a woman.
 \pagebreak   %%% NEEDED TO GET MARGINPAR IN RIGHT MARGIN (LATEX BUG)
 Prolog answers this query by working its way through KB4, from top to
 bottom, trying to \LPNterm{unify} (or \LPNterm{match}) the expression
-"woman(X)" with the information KB4 contains. Now the first item in
-the knowledge base is "woman(mia)". So, Prolog unifies "X" with "mia",
+"woman(X)'' with the information KB4 contains. Now the first item in
+the knowledge base is ``woman(mia)''. So, Prolog unifies ``X'' with ``mia'',
 thus making the query agree perfectly with this first item.
 (Incidentally, there's a lot of different terminology for this
-process: we can also say that Prolog \LPNterm{instantiates} "X" to
-"mia", or that it \LPNterm{binds} "X" to "mia".)  Prolog then reports
+process: we can also say that Prolog \LPNterm{instantiates} ``X'' to
+"mia'', or that it \LPNterm{binds} ``X'' to ``mia''.)  Prolog then reports
 back to us as follows:
 \begin{LPNcodedisplay}
 X = mia
@@ -426,10 +425,10 @@ a semicolon:
 \begin{LPNcodedisplay}
 X = mia ;
 \end{LPNcodedisplay}
-Remember that ";" means \LPNemph{or}, so this query means:
+Remember that ``;'' means \LPNemph{or}, so this query means:
 \LPNemph{are there any alternatives}?  So Prolog begins working through
 the knowledge base again (it remembers where it got up to last time
-and starts from there) and sees that if it unifies "X" with "jody",
+and starts from there) and sees that if it unifies ``X'' with ``jody'',
 then the query agrees perfectly with the second entry in the knowledge
 base.  So it responds:
 \begin{LPNcodedisplay}
@@ -438,7 +437,7 @@ X = jody
 \end{LPNcodedisplay}
 It's telling us that there is information about a second woman in KB4,
 and (once again) it actually gives us the value that led to success.
-And of course, if we press ";" a second time, Prolog returns the
+And of course, if we press ``;'' a second time, Prolog returns the
 answer
 \begin{LPNcodedisplay}
 X = mia ;
@@ -447,23 +446,23 @@ X = yolanda
 \end{LPNcodedisplay}
 
 
-But what happens if we press ";" a \LPNemph{third} time?  Prolog responds
+But what happens if we press ``;'' a \LPNemph{third} time?  Prolog responds
 no. No other unifications are possible.  There are no other facts starting
-with the symbol "woman".  The last four entries in the knowledge base concern
-the "love" relation, and there is no way that such entries can be unified with
-a query of the form "woman(X)".
+with the symbol ``woman''.  The last four entries in the knowledge base concern
+the ``love'' relation, and there is no way that such entries can be unified with
+a query of the form ``woman(X)''.
 
 Let's try a more complicated query, namely
 \begin{LPNcodedisplay}
 ?- loves(marsellus,X), woman(X).
 \end{LPNcodedisplay}
-Now, remember that "," means \LPNemph{and}, so this query says:
-\LPNemph{is there any individual} "X" \LPNemph{such that Marsellus
-loves} "X" \LPNemph{and} "X" \LPNemph{is a woman}?  If you look at the
+Now, remember that ``,'' means \LPNemph{and}, so this query says:
+\LPNemph{is there any individual} ``X'' \LPNemph{such that Marsellus
+loves} ``X'' \LPNemph{and} ``X'' \LPNemph{is a woman}?  If you look at the
 knowledge base you'll see that there is: Mia is a woman (fact 1) and
 Marsellus loves Mia (fact 5).  And in fact, Prolog is capable of
 working this out. That is, it can search through the knowledge base
-and work out that if it unifies "X" with Mia, then both conjuncts of
+and work out that if it unifies ``X'' with Mia, then both conjuncts of
 the query are satisfied (we'll learn in the following chapter how
 Prolog does this).  So Prolog returns the answer
 \begin{LPNcodedisplay}
@@ -499,20 +498,20 @@ jealous(X,Y):- loves(X,Z), loves(Y,Z).
 \end{LPNcodedisplay}
 
 
-KB5 contains four facts about the "loves" relation and one rule.
+KB5 contains four facts about the ``loves'' relation and one rule.
 (Incidentally, the blank line between the facts and the rule has no
 meaning: it's simply there to increase the readability. As we said
 earlier, Prolog gives us a great deal of freedom in the way we format
 knowledge bases.)  But this rule is by far the most interesting one we
-have seen so far: it contains three variables (note that "X", "Y", and
-"Z" are all upper-case letters). What does it say?
+have seen so far: it contains three variables (note that ``X'', ``Y'', and
+``Z'' are all upper-case letters). What does it say?
 
 In effect, it is defining a concept of jealousy.  It says that an
-individual "X" will be jealous of an individual "Y" if there is some
-individual "Z" that "X" loves, and "Y" loves that same individual "Z"
+individual ``X'' will be jealous of an individual ``Y'' if there is some
+individual ``Z'' that ``X'' loves, and ``Y'' loves that same individual ``Z''
 too. (Ok, so jealousy isn't as straightforward as this in the real
 world.) The key thing to note is that this is a \LPNemph{general}
-statement: it is not stated in terms of "mia", or "pumpkin", or anyone
+statement: it is not stated in terms of ``mia'', or ``pumpkin'', or anyone
 in particular --- it's a conditional statement about
 \LPNemph{everybody} in our little world.
 
@@ -522,8 +521,8 @@ Suppose we pose the query:
 ?- jealous(marsellus,W).
 \end{LPNcodedisplay}
 %
-This query asks: can you find an individual "W" such that Marsellus is
-jealous of "W"?  Vincent is such an individual.  If you check the
+This query asks: can you find an individual ``W'' such that Marsellus is
+jealous of ``W''?  Vincent is such an individual.  If you check the
 definition of jealousy, you'll see that Marsellus must be jealous of
 Vincent, because they both love the same woman, namely Mia. So Prolog
 will return the value
@@ -545,7 +544,7 @@ the answers surprise you? Do any seem silly?
 Now that we've got some idea of what Prolog does, it's time to go back
 to the beginning and work through the details more carefully. Let's
 start by asking a very basic question: we've seen all kinds of
-expressions (for example "jody", "playsAirGuitar(mia)", and "X") in
+expressions (for example ``jody'', ``playsAirGuitar(mia)'', and ``X") in
 our Prolog programs, but these have just been examples.  It's time for
 precision: exactly what are facts, rules, and queries built out of?
 
@@ -557,12 +556,12 @@ Atoms and numbers are lumped together under the heading
 
 Let's take a closer look. To make things crystal clear, let's first be
 precise about the basic \LPNterm{characters} (that is, symbols) at our
-disposal.  The \LPNemph{upper-case letters} are "A", "B",\ldots,"Z";
-the \LPNemph{lower-case letters} are "a", "b",\ldots,"z"; the
-\LPNemph{digits} are "0", "1", "2",\ldots,"9". In addition we have the "\_"
+disposal.  The \LPNemph{upper-case letters} are ``A'', ``B'',\ldots, ``Z'';
+the \LPNemph{lower-case letters} are ``a'', ``b'',\ldots,"z"; the
+\LPNemph{digits} are ``0'', ``1'', ``2'',\ldots,"9''. In addition we have the ``\_''
 symbol, which is called \LPNterm{underscore}, and some \LPNemph{special
-  characters}, which include characters such as "+", "-", "*", "/",
-"<", ">", "=", ":", ".", "\&", "~".  The blank \LPNemph{space} is also
+  characters}, which include characters such as ``+'', ``-'', ``*'', ``/'',
+``<'', ``>'', ``='', ``:'', ``.'', ``\&'', ``~''.  The blank \LPNemph{space} is also
 a character, but a rather unusual one, being invisible. A
 \LPNterm{string} is an unbroken sequence of characters.
 
@@ -575,18 +574,18 @@ An \LPNterm{atom} is either:
 \begin{enumerate}
 \item{}A string of characters made up of upper-case letters,
   lower-case letters, digits, and the underscore character, that
-  begins with a lower-case letter.  Here are some examples: "butch",
-  "big\_kahuna\_burger", "listens2Music" and "playsAirGuitar".
+  begins with a lower-case letter.  Here are some examples: ``butch'',
+  ``big\_kahuna\_burger'', ``listens2Music'' and ``playsAirGuitar''.
 \item{}An arbitrary sequence of characters enclosed in single quotes.
-  For example '"Vincent"', '"The Gimp"', '"Five\_Dollar\_Shake"',
-  '"\&\^\%\&\#@\$\&*"', and '" "'.
+  For example ``Vincent'', ``The Gimp'', ``Five\_Dollar\_Shake'',
+  ``\&\^\%\&\#@\$\&*'', and `` ''.
   The sequence of characters between the single quotes is called the \LPNterm{atom name}.
   Note that we are allowed to use spaces in such
   atoms; in fact, a common reason for using single quotes is so we
   can do precisely that.
-\item{}A string of special characters.  Here are some examples: "@=" and
-  "====>" and ";" and ":-" are all atoms.  As we have seen, some of
-  these atoms, such as ";" and ":-" have a pre-defined meaning.
+\item{}A string of special characters.  Here are some examples: ``@='' and
+  ``====>'' and ``;'' and ``:-'' are all atoms.  As we have seen, some of
+  these atoms, such as ``;'' and ``:-'' have a pre-defined meaning.
 \end{enumerate}
 
 
@@ -602,7 +601,7 @@ little about them in this book.
 But \LPNterm{integers} (that is: \ldots,-2, -1, 0, 1, 2, 3,\ldots) are
 useful for such tasks as counting the elements of a list, and we'll
 discuss how to manipulate them in Chapter~\ref{CHAPTER5}. Their Prolog
-syntax is the obvious one: "23", "1001", "0", "-365", and so on.
+syntax is the obvious one: ``23'', ``1001'', ``0'', ``-365'', and so on.
 
 
 \subsection*{Variables}\label{SUBSEC.L1.VARS}
@@ -610,11 +609,11 @@ syntax is the obvious one: "23", "1001", "0", "-365", and so on.
 
 A \LPNterm{variable} is a string of upper-case letters, lower-case letters,
 digits and underscore characters that starts \LPNemph{either} with an
-upper-case letter \LPNemph{or} with an underscore.  For example, "X",
-"Y", "Variable", "\_tag", "X\_526",  "List", "List24", "\_head",
-"Tail", "\_input" and "Output" are all Prolog variables.
+upper-case letter \LPNemph{or} with an underscore.  For example, ``X'',
+``Y'', ``Variable'', ``\_tag'', ``X\_526'',  ``List'', ``List24'', ``\_head'',
+``Tail'', ``\_input'' and ``Output'' are all Prolog variables.
 
-The variable "\_" (that is, a single underscore character) is rather
+The variable ``\_'' (that is, a single underscore character) is rather
 special.  It's called the \LPNemph{anonymous variable}, and we discuss
 it in Chapter~\ref{CHAPTER4}.
 
@@ -637,10 +636,10 @@ arguments can be any kind of term.
 
 Now, we've already seen lots of examples of complex terms when we
 looked at the knowledge bases KB1 to KB5. For example,
-"playsAirGuitar(jody)" is a complex term: its functor is
-"playsAirGuitar" and its argument is "jody".  Other examples are
-"loves(vincent,mia)" and, to give an example containing a variable,
-"jealous(marsellus,W)".
+"playsAirGuitar(jody)'' is a complex term: its functor is
+"playsAirGuitar'' and its argument is ``jody''.  Other examples are
+"loves(vincent,mia)'' and, to give an example containing a variable,
+"jealous(marsellus,W)''.
 
 But  the definition allows for  more complex terms than this.
 In fact, it allows us to keep nesting complex terms inside complex
@@ -651,13 +650,13 @@ For example
 hide(X,father(father(father(butch))))
 \end{LPNcodedisplay}
 %
-is a perfectly acceptable complex term. Its functor is "hide", and it
-has two arguments: the variable "X", and the complex term
-"father(father(father(butch)))". This complex term has "father" as its
-functor, and another complex term, namely "father(father(butch))", as
+is a perfectly acceptable complex term. Its functor is ``hide'', and it
+has two arguments: the variable ``X'', and the complex term
+``father(father(father(butch)))''. This complex term has ``father'' as its
+functor, and another complex term, namely ``father(father(butch))'', as
 its sole argument. And the argument of this complex term, namely
-"father(butch)", is also complex.  But then the nesting bottoms
-out, for the argument here is the constant "butch".
+``father(butch)'', is also complex.  But then the nesting bottoms
+out, for the argument here is the constant ``butch''.
 
 
 As we shall see, such nested (or recursively structured) terms enable
@@ -667,24 +666,24 @@ of much of Prolog's power.
 
 
 The number of arguments that a complex term has is called its
-\LPNterm{arity}.  For example, "woman(mia)" is a complex term of
-arity 1, and "loves(vincent,mia)" is a complex term of arity 2.
+\LPNterm{arity}.  For example, ``woman(mia)'' is a complex term of
+arity 1, and ``loves(vincent,mia)'' is a complex term of arity 2.
 
 
 Arity is important to Prolog.  Prolog would be quite happy for us to
 define two predicates with the same functor but with a different
 number of arguments.  For example, we are free to define a knowledge
-base that defines a two-place predicate "love" (this might contain
-such facts as "love(vincent,mia)"), and also a three-place "love"
+base that defines a two-place predicate ``love'' (this might contain
+such facts as ``love(vincent,mia)''), and also a three-place ``love"
 predicate (which might contain such facts as
-"love(vincent,marsellus,mia)"). However, if we did this, Prolog would
-treat the two-place "love" and the three-place "love" as different
+``love(vincent,marsellus,mia)''). However, if we did this, Prolog would
+treat the two-place ``love'' and the three-place ``love'' as different
 predicates. Later in the book (for example, when we introduce
 accumulators in Chapter~5) we shall see that it can be useful to
 define two predicates with the same functor but different arity.
 
 When we need to talk about predicates and how we intend to use them
-(for example, in documentation) it is usual to use a suffix "/"
+(for example, in documentation) it is usual to use a suffix ``/"
 followed by a number to indicate the predicate's arity.  To return to
 KB2, instead of saying that it defines predicates
 %
@@ -702,8 +701,8 @@ happy/1
 playsAirGuitar/1
 \end{LPNcodedisplay}
 And Prolog can't get confused about a knowledge base containing the
-two different love predicates, for it regards the "love/2" predicate
-and the "love/3" predicate as distinct.
+two different love predicates, for it regards the ``love/2'' predicate
+and the ``love/3'' predicate as distinct.
 
 
 
@@ -713,16 +712,16 @@ and the "love/3" predicate as distinct.
   characters are atoms, which are variables, and which are neither?
 
 \begin{enumerate}
-\item{}"vINCENT"
-\item{}"Footmassage"
-\item{}"variable23"
-\item{}"Variable2000"
-\item{}"big\_kahuna\_burger"
-\item{}"'big kahuna burger'"
-\item{}"big kahuna burger"
-\item{}"'Jules'"
-\item{}"\_Jules"
-\item{}"'\_Jules'"
+\item{}``vINCENT"
+\item{}``Footmassage"
+\item{}``variable23"
+\item{}``Variable2000"
+\item{}``big\_kahuna\_burger"
+\item{}``'big kahuna burger'"
+\item{}``big kahuna burger"
+\item{}``'Jules'"
+\item{}``\_Jules"
+\item{}``'\_Jules'"
 \end{enumerate}
 \end{LPNexercise}
 
@@ -732,16 +731,16 @@ and the "love/3" predicate as distinct.
   all?  Give the functor and arity of each complex term.
 
 \begin{enumerate}
-\item{}"loves(Vincent,mia)"
-\item{}"'loves(Vincent,mia)'"
-\item{}"Butch(boxer)"
-\item{}"boxer(Butch)"
-\item{}"and(big(burger),kahuna(burger))"
-\item{}"and(big(X),kahuna(X))"
-\item{}"\_and(big(X),kahuna(X))"
-\item{}"(Butch kills Vincent)"
-\item{}"kills(Butch Vincent)"
-\item{}"kills(Butch,Vincent"
+\item{}``loves(Vincent,mia)''
+\item{}``'loves(Vincent,mia)'"
+\item{}``Butch(boxer)''
+\item{}``boxer(Butch)''
+\item{}``and(big(burger),kahuna(burger))''
+\item{}``and(big(X),kahuna(X))''
+\item{}``\_and(big(X),kahuna(X))''
+\item{}``(Butch kills Vincent)''
+\item{}``kills(Butch Vincent)''
+\item{}``kills(Butch,Vincent"
 \end{enumerate}
 \end{LPNexercise}
 
@@ -785,13 +784,13 @@ hasBroom(X):- quidditchPlayer(X).
 
 How does Prolog respond to the following queries?
 \begin{enumerate}
-\item{}"wizard(ron)."
-\item{}"witch(ron)."
-\item{}"wizard(hermione)."
-\item{}"witch(hermione)."
-\item{}"wizard(harry)."
-\item{}"wizard(Y)."
-\item{}"witch(Y)."
+\item{}``wizard(ron)."
+\item{}``witch(ron)."
+\item{}``wizard(hermione)."
+\item{}``witch(hermione)."
+\item{}``wizard(harry)."
+\item{}``wizard(Y)."
+\item{}``witch(Y)."
 \end{enumerate}
 \end{LPNexercise}
 
@@ -816,7 +815,7 @@ need to master, and suggest some things for you to do.
 
 The simplest way to run a Prolog program is as follows. You have a
 file with your Prolog program in it (for example, you may have a file
-"kb2.pl" which contains the knowledge base KB2). You then start Prolog.
+"kb2.pl'' which contains the knowledge base KB2). You then start Prolog.
 Prolog will display its prompt, something like
 %
 \begin{LPNcodedisplay}
@@ -826,7 +825,7 @@ Prolog will display its prompt, something like
 which indicates that it is ready to accept a query.
 
 Now, at this stage, Prolog knows absolutely nothing about KB2 (or
-indeed anything else). To see this, type in the command "listing",
+indeed anything else). To see this, type in the command ``listing'',
 \index{PROLOG listing/0@\texttt{listing/0}} followed by a full stop,
 and hit return. That is, type
 %
@@ -848,7 +847,7 @@ yes
 \end{LPNcodedisplay}
 %
 This is a correct answer: as yet Prolog knows nothing --- so it
-correctly displays all this nothing and says "yes". Actually, with
+correctly displays all this nothing and says ``yes''. Actually, with
 more sophisticated Prolog implementations you may get a little more
 (for example, the names of libraries that have been loaded; libraries
 are discussed in Chapter~\ref{CHAPTER12})  but, one way or another,
@@ -856,14 +855,14 @@ you will receive what is essentially an ``I know nothing about any
 knowledge bases!'' answer.
 
 So let's tell Prolog about KB2. Assuming that you've stored KB2 in the
-file "kb2.pl", and that this file is in the  directory where
+file ``kb2.pl'', and that this file is in the  directory where
 you're running Prolog, all you have to type is
 %
 \begin{LPNcodedisplay}
 ?- [kb2].
 \end{LPNcodedisplay}
-This tells Prolog to \LPNterm{consult} the file "kb2.pl", and load the
-contents as its new knowledge base. Assuming that  "kb2.pl"
+This tells Prolog to \LPNterm{consult} the file ``kb2.pl'', and load the
+contents as its new knowledge base. Assuming that  ``kb2.pl"
 contains no typos, Prolog will read it in, maybe print out a message
 saying that it is consulting this file, and then answer:
 %
@@ -873,26 +872,26 @@ yes
 
 
 Incidentally, it is common to store Prolog code in files with a
-".pl" suffix. It's an indication of what the file contains (namely
+''.pl'' suffix. It's an indication of what the file contains (namely
 Prolog code) and with some Prolog implementations you don't actually
-have to type in the ".pl" suffix when you consult a file.  Nice ---
+have to type in the ``.pl'' suffix when you consult a file.  Nice ---
 but there is a drawback. Files containing Perl scripts usually have a
-".pl" suffix too, and nowadays there are a lot of Perl scripts in use,
+''.pl'' suffix too, and nowadays there are a lot of Perl scripts in use,
 so this can cause confusion. C'est la vie.
 
 If the above doesn't work, that is, if typing
 \begin{LPNcodedisplay}
 ?- [kb2].
 \end{LPNcodedisplay}
-produces an error message saying that the file "kb2"
+produces an error message saying that the file ``kb2"
 %(also sometimes
-%called "source_sink")
+%called ``source_sink")
 does not exist, then you probably haven't started Prolog from the
-directory where "kb2.pl" is stored. In that case, you can either stop
-Prolog (by typing "halt." after the prompt), change to the directory
-where "kb2.pl" is stored, and start Prolog again. Or you can tell
-Prolog exactly where to look for "kb2.pl". To do this, instead of
-writing only "kb2" between the square brackets, you give Prolog the
+directory where ``kb2.pl'' is stored. In that case, you can either stop
+Prolog (by typing ``halt.'' after the prompt), change to the directory
+where ``kb2.pl'' is stored, and start Prolog again. Or you can tell
+Prolog exactly where to look for ``kb2.pl''. To do this, instead of
+writing only ``kb2'' between the square brackets, you give Prolog the
 whole path enclosed in single quotes. For example, you type something
 like
 \begin{LPNcodedisplay}
@@ -906,7 +905,7 @@ or
 
 
 Ok, so Prolog should now know about all the KB2 predicates. And we can
-check whether it does by using the "listing" command again:
+check whether it does by using the ``listing'' command again:
 %
 \begin{LPNcodedisplay}
 ?- listing.
@@ -928,17 +927,17 @@ listens2Music(yolanda):-
 yes
 \end{LPNcodedisplay}
 That is, it will list the facts and rules that make up KB2, and then
-say "yes". Once again, you may get a little more than this, such as
+say ``yes''. Once again, you may get a little more than this, such as
 the locations of various libraries that have been loaded.
 
-Incidentally, "listing" can be used in other ways. For example, typing
+Incidentally, ``listing'' can be used in other ways. For example, typing
 %
 \begin{LPNcodedisplay}
 ?- listing(playsAirGuitar).
 \end{LPNcodedisplay}
 %
 simply lists all the information in the knowledge base about the
-"playsAirGuitar" predicate. So in this case Prolog will display
+"playsAirGuitar'' predicate. So in this case Prolog will display
 %
 \begin{LPNcodedisplay}
 playsAirGuitar(mia):-
@@ -986,7 +985,7 @@ But assuming you have mastered these skills, what next?  Quite simply,
 discussed in the text, and check that the queries discussed really do
 work the way we said they did.  In particular, take a look at KB5 and
 make sure you understand why you get those peculiar jealousy
-relations.  Try posing new queries.  Experiment with the "listing"
+relations.  Try posing new queries.  Experiment with the ``listing"
 predicate (it's a useful tool).  Type in the knowledge base used in
 Exercise~\ref{L1.EX5}, and check whether your answers are correct.
 Best of all, think of some simple situation that interests you, and

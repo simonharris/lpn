@@ -10,8 +10,8 @@
 
 \item{}To discuss unification in Prolog, and to explain how Prolog
   unification differs from standard unification.  Along the way, we'll
-  introduce \texttt{=/2}, the built-in predicate for Prolog
-  unification, and \texttt{unify\_with\_occurs\_check/2}, the built-in
+  introduce ``\texttt{=/2}'', the built-in predicate for Prolog
+  unification, and ``\texttt{unify\_with\_occurs\_check/2}'', the built-in
   predicate for standard unification.
 
 \item{}To explain the search strategy Prolog uses when it tries to
@@ -26,18 +26,18 @@
 
 When working with knowledge base KB4 in the previous chapter, we
 briefly mentioned the idea of \LPNterm{unification}. We said, for
-example, that Prolog unifies "woman(X)" with "woman(mia)", thereby
-\LPNterm{instantiating} the variable "X" to "mia". It's now time to take a
+example, that Prolog unifies ``woman(X)" with ``woman(mia)", thereby
+\LPNterm{instantiating} the variable ``X" to ``mia". It's now time to take a
 closer look at unification, for it is one of the most fundamental
 ideas in Prolog.
 
 Recall that there are three types of term:
 
 \begin{enumerate}
-\item{}Constants. These can either be atoms (such as "vincent") or numbers
-(such as "24").
-\item{}Variables. (Such as "X", "Z3", and "List".)
-\item{}Complex terms. These have the form:\\ "functor(term\_1,...,term\_n)".
+\item{}Constants. These can either be atoms (such as ``vincent") or numbers
+(such as ``24").
+\item{}Variables. (Such as ``X", ``Z3", and ``List".)
+\item{}Complex terms. These have the form:\\ ``functor(term\_1,...,term\_n)".
 \end{enumerate}
 
 We are  going to work our way towards a  definition of when
@@ -52,26 +52,26 @@ light on detail:
 }
 \end{center}
 %
-This means, for example, that the terms "mia" and "mia" unify, because
-they are the same atom. Similarly, the terms "42" and "42" unify,
-because they are the same number, the terms "X" and "X" unify, because
-they are the same variable, and the terms "woman(mia)" and
+This means, for example, that the terms ``mia" and ``mia" unify, because
+they are the same atom. Similarly, the terms ``42" and ``42" unify,
+because they are the same number, the terms ``X" and ``X" unify, because
+they are the same variable, and the terms ``woman(mia)" and
 "woman(mia)" unify, because they are the same complex term. The terms
-"woman(mia)" and "woman(vincent)", however, do not unify, as they are
+"woman(mia)" and ``woman(vincent)", however, do not unify, as they are
 not the same (and neither of them contains a variable that could be
 instantiated to make them the same).
 
-Now, what about the terms "mia" and "X"? They are not the same.
-However, the variable "X" can be instantiated to "mia" which makes
-them equal. So, by the second part of our working definition, "mia"
-and "X" unify. Similarly, the terms "woman(X)" and "woman(mia)" unify,
-because they can be made equal by instantiating "X" to "mia". How
-about "loves(vincent,X)" and "loves(X,mia)"? No. It is impossible to
-find an instantiation of "X" that makes the two terms equal. Do you
-see why?  Instantiating "X" to "vincent" would give us the terms
-"loves(vincent,vincent)" and "loves(vincent,mia)", which are obviously
-not equal. However, instantiating "X" to mia, would yield the terms
-"loves(vincent,mia)" and "loves(mia,mia)", which aren't equal either.
+Now, what about the terms ``mia" and ``X"? They are not the same.
+However, the variable ``X" can be instantiated to ``mia" which makes
+them equal. So, by the second part of our working definition, ``mia"
+and ``X" unify. Similarly, the terms ``woman(X)" and ``woman(mia)" unify,
+because they can be made equal by instantiating ``X" to ``mia". How
+about ``loves(vincent,X)" and ``loves(X,mia)"? No. It is impossible to
+find an instantiation of ``X" that makes the two terms equal. Do you
+see why?  Instantiating ``X" to ``vincent" would give us the terms
+"loves(vincent,vincent)" and ``loves(vincent,mia)", which are obviously
+not equal. However, instantiating ``X" to mia, would yield the terms
+"loves(vincent,mia)" and ``loves(mia,mia)", which aren't equal either.
 
 Usually we are not only interested in the fact that two terms unify,
 we also want to know how the variables have to be instantiated to make
@@ -86,27 +86,27 @@ The basic intuitions should now be clear.  Here's the definition which
 makes them precise. It tells us not only which terms Prolog will
 unify, but also what it will do to the variables to achieve this.
 \begin{enumerate}
-\item{}\LPNemph{If} "term1" \LPNemph{and} "term2" \LPNemph{are constants, then}
-"term1" \LPNemph{and} "term2" \LPNemph{unify if and only if they are the same
+\item{}\LPNemph{If} ``term1" \LPNemph{and} ``term2" \LPNemph{are constants, then}
+"term1" \LPNemph{and} ``term2" \LPNemph{unify if and only if they are the same
 atom, or the same number.}
-\item{}\LPNemph{If} "term1" \LPNemph{is a variable and} "term2"
-\LPNemph{is any type of term, then} "term1" \LPNemph{and} "term2"
-\LPNemph{unify, and} "term1" \LPNemph{is instantiated to} "term2".
-\LPNemph{Similarly, if} "term2" \LPNemph{is a variable and} "term1"
-\LPNemph{is any type of term, then} "term1" \LPNemph{and} "term2"
-\LPNemph{unify, and} "term2" \LPNemph{is instantiated to} "term1".
+\item{}\LPNemph{If} ``term1" \LPNemph{is a variable and} ``term2"
+\LPNemph{is any type of term, then} ``term1" \LPNemph{and} ``term2"
+\LPNemph{unify, and} ``term1" \LPNemph{is instantiated to} ``term2".
+\LPNemph{Similarly, if} ``term2" \LPNemph{is a variable and} ``term1"
+\LPNemph{is any type of term, then} ``term1" \LPNemph{and} ``term2"
+\LPNemph{unify, and} ``term2" \LPNemph{is instantiated to} ``term1".
 \LPNemph{(So if they are both variables, they're both instantiated to
 each other, and we say that they \LPNterm{share values}.)}
 
-\item{}\LPNemph{If} "term1" \LPNemph{and} "term2" \LPNemph{are complex terms, then
+\item{}\LPNemph{If} ``term1" \LPNemph{and} ``term2" \LPNemph{are complex terms, then
                 they unify if and only if:}
 \begin{enumerate}
 \item{}\LPNemph{They have the same functor and arity, and}
 \item{}\LPNemph{all their corresponding arguments unify, and}
 \item{}\LPNemph{the variable instantiations are compatible. (For example,
-it is not possible to instantiate variable} "X" \LPNemph{to} "mia"
+it is not possible to instantiate variable} ``X" \LPNemph{to} ``mia"
 \LPNemph{when unifying one pair of arguments, and to  instantiate}
-"X" \LPNemph{to} "vincent" \LPNemph{when unifying another pair of
+"X" \LPNemph{to} ``vincent" \LPNemph{when unifying another pair of
 arguments}.)
 \end{enumerate}
 
@@ -127,7 +127,7 @@ three clauses mirror perfectly the (recursive) structure of terms.
 The fourth clause is also important: it says that the first three
 clauses tell us all we need to know about the unification of two
 terms. If two terms can't be shown to unify using clauses~1--3, then
-they \LPNemph{don't} unify. For example, "batman" does not unify with
+they \LPNemph{don't} unify. For example, ``batman" does not unify with
 "daughter(ink)". Why not? Well, the first term is a constant, and the
 second is a complex term.  But none of the first three clauses tell us
 how to unify two such terms, hence (by clause~4) they don't unify.
@@ -138,29 +138,29 @@ how to unify two such terms, hence (by clause~4) they don't unify.
 
 To make sure we've fully understood this definition, let's work
 through several examples.  In these examples we'll make use of an
-important built-in predicate, the "=/2" predicate (recall that
-writing\index{PROLOG =/2@\texttt{=/2}} "/2" at the end indicates that
+important built-in predicate, the ``=/2" predicate (recall that
+writing\index{PROLOG =/2@\texttt{=/2}} ``/2" at the end indicates that
 this predicate takes two arguments).
 
 
-The "=/2" predicate tests whether its two arguments
+The ``=/2" predicate tests whether its two arguments
 unify. For example, if we pose the query
 %
 \begin{LPNcodedisplay}
 ?- =(mia,mia).
 \end{LPNcodedisplay}
 %
-Prolog will respond yes, and if we pose the query
+Prolog will respond ``yes'', and if we pose the query
 \begin{LPNcodedisplay}
 ?- =(mia,vincent).
 \end{LPNcodedisplay}
 %
-Prolog will respond no.
+Prolog will respond ``no''.
 
 But we usually wouldn't pose these queries in quite this way.  Let's
-face it, the notation "=(mia,mia)" is rather unnatural. It would be
+face it, the notation ``=(mia,mia)" is rather unnatural. It would be
 nicer if we could use \LPNterm{infix} notation (that is, if we could
-put the "=/2" functor between its arguments) and write things like:
+put the ``=/2" functor between its arguments) and write things like:
 %
 \begin{LPNcodedisplay}
 ?- mia = mia.
@@ -188,7 +188,7 @@ The definition has three clauses. Now, clause~2 is for when one
 argument is a variable, and clause~3 is for when both arguments are
 complex terms, so these are of no use here. However clause~1 \LPNemph{is}
 relevant to our example.  This tells us that two constants unify if
-and only if they are exactly the same object. As "mia" and "mia"
+and only if they are exactly the same object. As ``mia" and ``mia"
 are the same atom, unification succeeds.
 
 A similar argument explains the following responses:
@@ -200,9 +200,9 @@ yes
 no
 \end{LPNcodedisplay}
 %
-Once again, clause~1 is relevant here (after all, "2", "mia", and
-"vincent" are all constants). And as "2" is the same number as "2",
-and as "mia" is \LPNemph{not} the same atom as "vincent", Prolog
+Once again, clause~1 is relevant here (after all, ``2", ``mia", and
+"vincent" are all constants). And as ``2" is the same number as ``2",
+and as ``mia" is \LPNemph{not} the same atom as ``vincent", Prolog
 responds yes to the first query and no to the second.
 
 However clause~1 does hold one small surprise for us. Consider the
@@ -213,9 +213,9 @@ yes
 \end{LPNcodedisplay}
 %
 What's going on here? Why do these two terms unify? Well, as far as
-Prolog is concerned, "'mia'" and "mia" are the same atom. In fact, for
-Prolog, any atom of the form "'symbols'" is considered the same entity
-as the atom of the form "symbols". This can be a useful feature in
+Prolog is concerned, ``'mia'" and ``mia" are the same atom. In fact, for
+Prolog, any atom of the form ``'symbols'" is considered the same entity
+as the atom of the form ``symbols". This can be a useful feature in
 certain kinds of programs, so don't forget it.
 
 On the other hand, to the query
@@ -225,7 +225,7 @@ On the other hand, to the query
 %
 Prolog will respond no. And if you think about the definitions given
 in Chapter~\ref{CHAPTER1}, you will see that this has to be the way
-things work.  After all, "2" is a number, but "'2'" is an atom. They
+things work.  After all, ``2" is a number, but ``'2'" is an atom. They
 simply cannot be the same.
 
 Let's try an example with a variable:
@@ -236,8 +236,8 @@ X = mia
 yes
 \end{LPNcodedisplay}
 %
-Again, this in an easy example: clearly the variable "X" can be
-unified with the constant "mia", and Prolog does so, and tells us that
+Again, this in an easy example: clearly the variable ``X" can be
+unified with the constant ``mia", and Prolog does so, and tells us that
 it has made this unification. Fine, but how does this follow from our
 definition?
 
@@ -245,7 +245,7 @@ The relevant clause here is clause~2. This tells us what happens when
 at least one of the arguments is a variable. In our example it is the
 second term which is the variable. The definition tells us unification
 is possible, and also says that the variable is instantiated to the
-first argument, namely "mia". And this, of course, is exactly what
+first argument, namely ``mia". And this, of course, is exactly what
 Prolog does.
 
 Now for an important example: what happens with the following query?
@@ -262,7 +262,7 @@ yes
 %
 Prolog is simply agreeing that the two terms unify (after all,
 variables unify with anything, so they certainly unify with each
-other) and making a note that from now on, "X" and "Y" denote the same
+other) and making a note that from now on, ``X" and ``Y" denote the same
 object, that is, share values.
 
 On the other hand, you may get the following output:
@@ -271,18 +271,18 @@ X = _5071
 Y = _5071
 yes
 \end{LPNcodedisplay}
-What's going on here?  Essentially the same thing. Note that "\_5071"
+What's going on here?  Essentially the same thing. Note that ``\_5071"
 is a variable (recall from Chapter~\ref{CHAPTER1} that strings of
 letters and numbers that start with the underscore character are
 variables).  Now look at clause~2 of the definition of
 unification. This tells us that when two variables are unified, they
-share values. So Prolog has created a new variable (namely "\_5071")
-and from now on both "X" and "Y" share the value of this variable. In
+share values. So Prolog has created a new variable (namely ``\_5071")
+and from now on both ``X" and ``Y" share the value of this variable. In
 effect, Prolog is creating a common variable name for the two original
 variables.  Needless to say, there's nothing magic about the number
 "5071".  Prolog just needs to generate a brand new variable name, and
 using numbers is a handy way to do this. It might just as well
-generate "\_5075", or "\_6189", or whatever.
+generate ``\_5075", or ``\_6189", or whatever.
 
 Here is another example involving only atoms and variables. How do you
 think will Prolog respond?
@@ -291,12 +291,12 @@ think will Prolog respond?
 \end{LPNcodedisplay}
 
 
-Prolog will respond no. This query involves two goals, "X = mia" and
+Prolog will respond no. This query involves two goals, ``X = mia" and
 "X = vincent". Taken separately, Prolog would succeed at both of them,
-instantiating "X" to "mia" in the first case and to "vincent" in the
+instantiating ``X" to ``mia" in the first case and to ``vincent" in the
 second. And that's exactly the problem here: once Prolog has worked
-through the first goal, "X" is instantiated to (and therefore equal
-to) "mia", so that it simply can't unify with "vincent" anymore.
+through the first goal, ``X" is instantiated to (and therefore equal
+to) ``mia", so that it simply can't unify with ``vincent" anymore.
 Hence the second goal fails. An \LPNemph{instantiated} variable isn't
 really a variable anymore: it has become what it was instantiated with.
 
@@ -316,9 +316,9 @@ we are trying to unify two complex terms.  So the first thing we need
 to do is check that both complex terms have the same functor and
 arity. And they do.  Clause~3 also tells us that we have to unify the
 corresponding arguments in each complex term. So do the first
-arguments, "s(g)" and "X", unify? By clause~2, yes, and we instantiate
-"X" to "s(g)". So do the second arguments, "Y" and "t(k)", unify?
-Again by clause~2, yes, and we instantiate "Y" to "t(k)".
+arguments, ``s(g)" and ``X", unify? By clause~2, yes, and we instantiate
+"X" to ``s(g)". So do the second arguments, ``Y" and ``t(k)", unify?
+Again by clause~2, yes, and we instantiate ``Y" to ``t(k)".
 
 Here's another example with complex terms:
 \begin{LPNcodedisplay}
@@ -342,8 +342,8 @@ Do these terms unify? No, they don't. It's true that they are both
 complex terms and have the same functor and arity, but clause~3 also
 demands that all corresponding arguments have to unify, and that the
 variable instantiations have to be compatible. This is not the case
-here. Unifying the first arguments would instantiate "X" with
-"marcellus". Unifying the second arguments would instantiate "X" with
+here. Unifying the first arguments would instantiate ``X" with
+"marcellus". Unifying the second arguments would instantiate ``X" with
 "mia". Either way, we're blocked.
 
 
@@ -362,15 +362,15 @@ Consider the following query:
 \end{LPNcodedisplay}
 %
 Do these terms unify or not?  A standard unification algorithm would
-say: ``No, they don't''. Why is that? Well, pick any term and instantiate "X"
-to the term you picked.  For example, if you instantiate "X" to
-"father(father(butch))", the left hand side becomes
-"father(father(father(butch)))", and the right hand side becomes
-"father(father(butch))". Obviously these don't unify. Moreover, it
-makes no difference what term you instantiate "X" to.  No matter what
+say: ``No, they don't''. Why is that? Well, pick any term and instantiate ``X"
+to the term you picked.  For example, if you instantiate ``X" to
+``father(father(butch))'', the left hand side becomes
+``father(father(father(butch)))'', and the right hand side becomes
+``father(father(butch))''. Obviously these don't unify. Moreover, it
+makes no difference what term you instantiate ``X" to.  No matter what
 you choose, the two terms cannot possibly be made the same, for the
 term on the left will always be one symbol longer than the term on the
-right (the functor "father" on the left will always give it that one
+right (the functor ``father" on the left will always give it that one
 extra level). A standard unification
 algorithm will spot this (we'll see why shortly when we discuss the
 occurs check), halt, and tell us no.
@@ -408,9 +408,9 @@ Prolog is desperately \LPNemph{trying} to come back with the correctly
 instantiated terms, but it can't halt, because the instantiation
 process is unbounded. From an abstract mathematical perspective, what
 Prolog is trying to do  is sensible. Intuitively, the only way the
-two terms could be made to unify would be if "X" was instantiated to a
-term containing an infinitely long string of "father" functors, so
-that the effect of the extra "father" functor on the left hand side
+two terms could be made to unify would be if ``X" was instantiated to a
+term containing an infinitely long string of ``father" functors, so
+that the effect of the extra ``father" functor on the left hand side
 was cancelled out.  But the terms we compute with are \LPNemph{finite}
 entities. Infinite terms are an interesting mathematical abstraction,
 but they're not something we can work with.  No matter how hard Prolog
@@ -418,7 +418,7 @@ tries, it can never build one.
 
 Now, it's annoying to have Prolog running out of memory like this, and
 sophisticated Prolog implementations have found  ways of coping more
-gracefully. Try posing the query "father(X) = X" to SWI Prolog or
+gracefully. Try posing the query ``father(X) = X" to SWI Prolog or
 SICStus Prolog. The answer will be something like:
 \begin{LPNcodedisplay}
 X = father(father(father(father(...))))))))
@@ -499,7 +499,7 @@ carried out as fast as possible. Carrying out an occurs check every
 time unification is called for would slow it down
 considerably. Pessimism is safe, but optimism is a lot faster!  Prolog
 can only run into problems if you, the programmer, ask it to do
-something like unify "X" with "father(X)". And it is unlikely you will
+something like unify ``X" with ``father(X)". And it is unlikely you will
 ever (intentionally) ask it to do anything like that when writing a
 real program.
 
@@ -515,7 +515,7 @@ So if we posed the query
 \begin{LPNcodedisplay}
 ?- unify_with_occurs_check(father(X),X).
 \end{LPNcodedisplay}
-we would get the response  no.
+we would get the response ``no''.
 
 
 \subsection*{Programming with unification}\label{SUBSEC.L2.PROGRAMMING-WITH-UNIFICATION}
@@ -534,7 +534,7 @@ Here's a simple example of this, due to Ivan Bratko.%
 Addison-Wesley Publishing Company, 1990, second edition, pages
 41--43.}
 The following two line knowledge base defines two
-predicates, namely "vertical/1" and "horizontal/1", which specify what
+predicates, namely ``vertical/1" and ``horizontal/1", which specify what
 it means for a line to be vertical or horizontal respectively:
 %
 \begin{LPNcodedisplay}
@@ -554,32 +554,32 @@ Maybe it's not quite as simple as it seems.  Let's take a closer look.
 
 Right down at the bottom level, we have a complex term with functor
 "point" and two arguments. Its two arguments are intended to be
-instantiated to numbers: "point(X,Y)" represents the Cartesian
-coordinates of a point.  That is, the "X" indicates the horizontal
-distance the point is from some fixed point, while the "Y" indicates
+instantiated to numbers: ``point(X,Y)" represents the Cartesian
+coordinates of a point.  That is, the ``X" indicates the horizontal
+distance the point is from some fixed point, while the ``Y" indicates
 the vertical distance from that same fixed point.
 
 Now, once we've specified two distinct points, we've specified a line,
 namely the line between them.  So the two complex terms representing
 points are bundled together as the two arguments of another complex
-term with the functor "line". In effect, we represent a line by a
+term with the functor ``line". In effect, we represent a line by a
 complex term which has two arguments which are complex terms
 themselves and represent points. We're using Prolog's ability to build
 complex terms to work our way up a hierarchy of concepts.
 
 Being vertical, and being horizontal, are properties of lines. The
-predicates "vertical" and "horizontal" therefore both take one
-argument which represents a line.  The definition of "vertical/1"
+predicates ``vertical" and ``horizontal" therefore both take one
+argument which represents a line.  The definition of ``vertical/1"
 simply says: a line that goes between two points that have the same
 x-coordinate is vertical.  Note how we capture the effect of ``the same
-x-coordinate'' in Prolog: we simply make use of the same variable "X"
+x-coordinate'' in Prolog: we simply make use of the same variable ``X"
 as the first argument of the two complex terms representing the
 points.
 
-Similarly, the definition of "horizontal/1" simply says: a line that
+Similarly, the definition of ``horizontal/1" simply says: a line that
 goes between two points that have the same y-coordinate is horizontal.
 To capture the effect of ``the same y-coordinate'', we use the same
-variable "Y" as the second argument of the two complex terms
+variable ``Y" as the second argument of the two complex terms
 representing the points.
 
 What can we do with this knowledge base? Let's look at some examples:
@@ -596,7 +596,7 @@ Prolog says yes.  Similarly we have:
 ?- vertical(line(point(1,1),point(3,2))).
 no
 \end{LPNcodedisplay}
-This query does not unify with the definition of "vertical/1" (the
+This query does not unify with the definition of ``vertical/1" (the
 representations of the two points have different first arguments) so
 Prolog says no.
 
@@ -613,7 +613,7 @@ Here our query is: if we want a horizontal line between a point at
 (1,1), and point whose x-coordinate is 2, what should the y-coordinate
 of that second point be?  Prolog correctly tells us that the
 y-coordinate should be 1. If we then ask Prolog for a second
-possibility (note the ";") it tells us that no other possibilities
+possibility (note the ``;") it tells us that no other possibilities
 exist.
 
 Now consider the following:
@@ -627,7 +627,7 @@ no
 %
 This query is: if we want a horizontal line between a point at (2,3),
 and some other point, what other points are permissible?  The answer
-is: any point whose y-coordinate is 3. Note that the "\_1972" in the
+is: any point whose y-coordinate is 3. Note that the ``\_1972" in the
 first argument of the answer is a variable, which is Prolog's way of
 telling us that any x-coordinate at all will do.
 
@@ -684,33 +684,33 @@ Suppose we  then pose the query
 \end{LPNcodedisplay}
 %
 It is probably clear that there is only one answer to this query,
-namely "k(b)", but how exactly does Prolog work this out? Let's see.
+namely ``k(b)", but how exactly does Prolog work this out? Let's see.
 
-Prolog reads the knowledge base, and tries to unify "k(Y)" with either
+Prolog reads the knowledge base, and tries to unify ``k(Y)" with either
 a fact, or the head of a rule. It searches the knowledge base top to
 bottom, and carries out the unification, if it can, at the first place
-possible. Here there is only one possibility: it must unify "k(Y)" to
-the head of the rule "k(X) :- f(X), g(X), h(X)".
+possible. Here there is only one possibility: it must unify ``k(Y)" to
+the head of the rule ``k(X) :- f(X), g(X), h(X)".
 
 When Prolog unifies the variable in a query to a variable in a fact or
 rule, it generates a brand new variable
-(say "\_G34")
+(say ``\_G34")
 to represent the shared
 variables. So the original query now reads:
 \begin{LPNcodedisplay}
-k(_G34)
+?- k(_G34)
 \end{LPNcodedisplay}
 %
 and Prolog knows that
 \begin{LPNcodedisplay}
-k(_G34) :- f(_G34), g(_G34), h(_G34).
+?- k(_G34) :- f(_G34), g(_G34), h(_G34).
 \end{LPNcodedisplay}
 
 
 So what do we now have? The original query says: ``I want to find an
-individual that has property "k"''. The rule says, ``an individual has
-property "k" if it has properties "f", "g", and "h"''. So if Prolog
-can find an individual with properties "f", "g", and "h", it will have
+individual that has property ``k"''. The rule says, ``an individual has
+property ``k" if it has properties ``f", ``g", and ``h"''. So if Prolog
+can find an individual with properties ``f", ``g", and ``h", it will have
 satisfied the original query. So Prolog replaces the original query
 with the following list of goals:
 \begin{LPNcodedisplay}
@@ -725,21 +725,21 @@ and succinct if we think graphically. Consider the following diagram:
 \end{center}
 %
 Everything in a box is either a query or a goal.  In particular, our
-original goal was to prove "k(Y)", thus this is shown in the top box.
-When we unified "k(Y)" with the head of the rule in the knowledge
-base, "X" "Y", and the new internal variable "\_G34" were made to share
-values, and we were left with the goals "f(\_G34),g(\_G34),h(\_G34)",
+original goal was to prove ``k(Y)", thus this is shown in the top box.
+When we unified ``k(Y)" with the head of the rule in the knowledge
+base, ``X" ``Y", and the new internal variable ``\_G34" were made to share
+values, and we were left with the goals ``f(\_G34),g(\_G34),h(\_G34)",
 just as shown.
 
 Now, whenever it has a list of goals, Prolog tries to satisfy them one
 by one, working through the list in a left to right direction. The
-leftmost goal is "f(\_G34)", which reads: ``I want an individual with
-property "f"''. Can this goal be satisfied? Prolog tries to do so by
+leftmost goal is ``f(\_G34)", which reads: ``I want an individual with
+property ``f"''. Can this goal be satisfied? Prolog tries to do so by
 searching through the knowledge base from top to bottom.  The first
-item it finds that unifies with this goal is the fact "f(a)". This
-satisfies the goal "f(\_G34)" and we are left with two more goals.
-Now, when we unify "f(\_G34)" to "f(a)", "\_G34" is instantiated to "a",
-and this instantiation applies to all occurrences of "\_G34" in the
+item it finds that unifies with this goal is the fact ``f(a)". This
+satisfies the goal ``f(\_G34)" and we are left with two more goals.
+Now, when we unify ``f(\_G34)" to ``f(a)", ``\_G34" is instantiated to ``a",
+and this instantiation applies to all occurrences of ``\_G34" in the
 list of goals. So the list now looks like this:
 \begin{LPNcodedisplay}
 g(a),h(a)
@@ -752,7 +752,7 @@ and our graphical representation of the proof search now looks like this:
 \end{center}
 %
 
-But the fact "g(a)" is in the knowledge base, so the first goal we
+But the fact ``g(a)" is in the knowledge base, so the first goal we
 have to prove is satisfied too. So the goal list becomes
 \begin{LPNcodedisplay}
 h(a)
@@ -764,17 +764,17 @@ and the graphical representation is now
 \includegraphics{chap2-pspic3.ps}
 \end{center}
 %
-But there is no way to satisfy "h(a)", the last remaining goal.  The
-only information about "h" we have in the knowledge base is "h(b)",
-and this won't unify with "h(a)".
+But there is no way to satisfy ``h(a)", the last remaining goal.  The
+only information about ``h" we have in the knowledge base is ``h(b)",
+and this won't unify with ``h(a)".
 
 So what happens next? Well, Prolog decides it has made a mistake, and
 checks whether it has missed any possible ways of unifying a goal with
 a fact or the head of a rule in the knowledge base. It does this by
 going back up the path shown in the graphical representation, looking
 for alternatives. Now, there is nothing else in the knowledge base
-that unifies with "g(a)", but there \LPNemph{is} another way of
-unifying "f(\_G34)".  Points in the search where there are several
+that unifies with ``g(a)", but there \LPNemph{is} another way of
+unifying ``f(\_G34)".  Points in the search where there are several
 alternative ways of unifying a goal against the knowledge base are
 called \LPNterm{choice points}.  Prolog keeps track of choice points it
 has encountered, so that if it makes a wrong choice it can retreat to
@@ -791,13 +791,13 @@ f(_G34),g(_G34),h(_G34).
 Prolog must now redo this work.  First it must try to
 \LPNterm{re-satisfy} the first goal  by searching further in the
 knowledge base.  It can do this: it sees that it can unify the first
-goal with information in the knowledge base by unifying "f(\_G34)" with
-"f(b)". This satisfies the goal "f(\_G34)" and instantiates "X" to "b",
+goal with information in the knowledge base by unifying ``f(\_G34)" with
+"f(b)". This satisfies the goal ``f(\_G34)" and instantiates ``X" to ``b",
 so that the remaining goal list is
 \begin{LPNcodedisplay}
 g(b),h(b).
 \end{LPNcodedisplay}
-But "g(b)" is a fact in the knowledge base, so this is satisfied too,
+But ``g(b)" is a fact in the knowledge base, so this is satisfied too,
 leaving the goal list:
 \begin{LPNcodedisplay}
 h(b).
@@ -805,9 +805,9 @@ h(b).
 Moreover, this fact too is in the knowledge base, so this goal is also
 satisfied. So Prolog now has an empty list of goals.  This means that
 it has now proved everything required to establish the original goal
-(that is, "k(Y)"). So the original query \LPNemph{is} satisfiable, and
+(that is, ``k(Y)"). So the original query \LPNemph{is} satisfiable, and
 moreover, Prolog has also discovered what it has to do to satisfy it
-(namely instantiate "Y" to "b").
+(namely instantiate ``Y" to ``b").
 
 
 It is interesting to consider what happens if we then ask for another
@@ -817,10 +817,10 @@ solution by typing:
 \end{LPNcodedisplay}
 This forces Prolog to backtrack to the last choice point, to try and
 find another possibility. However, there are no other choice points, as
-there are no other possibilities for unifying "h(b)", "g(b)",
-"f(\_G34)", or "k(Y)" with clauses in the knowledge base, so Prolog
+there are no other possibilities for unifying ``h(b)", ``g(b)",
+"f(\_G34)", or ``k(Y)" with clauses in the knowledge base, so Prolog
 would respond no.  On the other hand, if there had been other rules
-involving "k", Prolog would have gone off and tried to use them in
+involving ``k", Prolog would have gone off and tried to use them in
 exactly the way we have described: that is, by searching top to bottom
 in the knowledge base, left to right in goal lists, and backtracking
 to the previous choice point whenever it fails.
@@ -867,7 +867,7 @@ The search tree for the query looks like this:
 \includegraphics{chap2-pspic5.ps}
 \end{center}
 
-There is only one possible way of unifying "jealous(X,Y)" against the
+There is only one possible way of unifying ``jealous(X,Y)" against the
 knowledge base, namely by using the rule
 \begin{LPNcodedisplay}
 jealous(A,B):- loves(A,C), loves(B,C).
@@ -877,23 +877,23 @@ So the new goals that have to be satisfied are:
 \begin{LPNcodedisplay}
 loves(_G5,_G6),loves(_G7,_G6)
 \end{LPNcodedisplay}
-Now we have to unify "loves(\_G5,\_G6)" against the knowledge base.
+Now we have to unify ``loves(\_G5,\_G6)" against the knowledge base.
 There are two ways of doing this (it can either be unified with the
 first fact or with the second fact) and this is why the path branches
-at this point. In both cases the goal "loves(\_G7,mia)" remains, and
+at this point. In both cases the goal ``loves(\_G7,mia)" remains, and
 this can also be satisfied by using  either of two facts.  All in
 all there are four leaf nodes with an empty goal list, which means
 that there are four ways of satisfying the original query. The
 variable instantiations for each solution can be read off the path
 from the root to the leaf node. So the four solutions are:
 \begin{enumerate}
-\item{}"X = \_G5 = vincent" and
+\item{}``X = \_G5 = vincent" and
 "Y = \_G7 = vincent"
-\item{}"X = \_G5 = vincent" and
+\item{}``X = \_G5 = vincent" and
 "Y = \_G7 = marcellus"
-\item{}"X = \_G5 = marcellus" and
+\item{}``X = \_G5 = marcellus" and
 "Y = \_G7 = vincent"
-\item{}"X = \_G5 = marcellus" and
+\item{}``X = \_G5 = marcellus" and
 "Y = \_G7 = marcellus"
 \end{enumerate}
 Work through this example carefully, and make sure you understand it.
@@ -905,20 +905,20 @@ Work through this example carefully, and make sure you understand it.
 Where relevant, give the
 variable instantiations that lead to successful unification.
 \begin{enumerate}
-\item{}"bread = bread"
-\item{}"'Bread' = bread"
-\item{}"'bread' = bread"
-\item{}"Bread = bread"
-\item{}"bread = sausage"
-\item{}"food(bread) = bread"
-\item{}"food(bread) = X"
-\item{}"food(X) = food(bread)"
-\item{}"food(bread,X) = food(Y,sausage)"
-\item{}"food(bread,X,beer) = food(Y,sausage,X)"
-\item{}"food(bread,X,beer) = food(Y,kahuna\_burger)"
-\item{}"food(X) = X"
-\item{}"meal(food(bread),drink(beer)) = meal(X,Y)"
-\item{}"meal(food(bread),X) = meal(X,drink(beer))"
+\item{}``bread = bread"
+\item{}``'Bread' = bread"
+\item{}``'bread' = bread"
+\item{}``Bread = bread"
+\item{}``bread = sausage"
+\item{}``food(bread) = bread"
+\item{}``food(bread) = X"
+\item{}``food(X) = food(bread)"
+\item{}``food(bread,X) = food(Y,sausage)"
+\item{}``food(bread,X,beer) = food(Y,sausage,X)"
+\item{}``food(bread,X,beer) = food(Y,kahuna\_burger)"
+\item{}``food(X) = X"
+\item{}``meal(food(bread),drink(beer)) = meal(X,Y)"
+\item{}``meal(food(bread),X) = meal(X,drink(beer))"
 \end{enumerate}
 \end{LPNexercise}
 
@@ -937,13 +937,13 @@ magic(X):- witch(X).
 Which of the following queries are satisfied? Where relevant, give all
 the variable instantiations that lead to success.
 \begin{enumerate}
-\item{}"?- magic(house\_elf)."
-\item{}"?- wizard(harry)."
-\item{}"?- magic(wizard)."
-\item{}"?- magic('McGonagall')."
-\item{}"?- magic(Hermione)."
+\item{}``?- magic(house\_elf)."
+\item{}``?- wizard(harry)."
+\item{}``?- magic(wizard)."
+\item{}``?- magic('McGonagall')."
+\item{}``?- magic(Hermione)."
 \end{enumerate}
-Draw the search tree for the query "magic(Hermione)".
+Draw the search tree for the query ``magic(Hermione)".
 \end{LPNexercise}
 
 
@@ -976,10 +976,10 @@ generate in the order that Prolog will generate them in.
 
 
 \begin{LPNexercise}{L2.EX4}Here are six Italian words:
-
+\begin{quote}
 \LPNemph{astante}, \LPNemph{astoria}, \LPNemph{baratto},
 \LPNemph{cobalto}, \LPNemph{pistola}, \LPNemph{statale}.
-
+\end{quote}
 \noindent
 They are to be arranged, crossword puzzle
 fashion, in the following grid:
@@ -1000,7 +1000,7 @@ word(cobalto, c,o,b,a,l,t,o).
 word(pistola, p,i,s,t,o,l,a).
 word(statale, s,t,a,t,a,l,e).
 \end{LPNcodedisplay}
-Write a predicate "crossword/6" that tells us how to fill in the grid.
+Write a predicate ``crossword/6" that tells us how to fill in the grid.
 The first three arguments should be the vertical words from left to
 right, and the last three arguments the horizontal words from top
 to bottom.\end{LPNexercise}
@@ -1023,11 +1023,11 @@ something like:
 \end{LPNcodedisplay}
 Verify your answers to Exercise 2.1, the unification examples. You
 don't need to consult any knowledge bases, simply ask Prolog directly
-whether it is possible to unify the terms by using the built-in "=/2"
-predicate. For example, to test whether "food(bread,X)" and
+whether it is possible to unify the terms by using the built-in ``=/2"
+predicate. For example, to test whether ``food(bread,X)" and
 "food(Y,sausage)" unify, just type in
 \begin{LPNcodedisplay}
-food(bread,X) = food(Y,sausage).
+?- food(bread,X) = food(Y,sausage).
 \end{LPNcodedisplay}
 %
 and hit return.
@@ -1037,63 +1037,62 @@ attempts to unify terms that can't be unified because it doesn't carry
 out an occurs check. For example, see what happens when you give it
 the following query:
 \begin{LPNcodedisplay}
-g(X,Y) = Y.
+?- g(X,Y) = Y.
 \end{LPNcodedisplay}
-If it handles such examples, try the trickier one mentioned in the
-text:
+If it handles such examples, try the trickier one mentioned in the text:
 \begin{LPNcodedisplay}
-X = f(X), Y = f(Y), X = Y.
+?- X = f(X), Y = f(Y), X = Y.
 \end{LPNcodedisplay}
 
 Once you've experimented with that, it's time to move on to something
 new.  There is another built-in Prolog predicate for
-answering queries about unification, namely "\=/2" (that is: the
-2-place predicate "\=").  \index{PROLOG \=/2@\verb-\=/2-} This works
-in the opposite way to the "=/2" predicate: it succeeds when its two
-arguments do \LPNemph{not} unify.  For example, the terms "a" and "b"
+answering queries about unification, namely ``\=/2" (that is: the
+2-place predicate ``\=").  \index{PROLOG \=/2@\verb-\=/2-} This works
+in the opposite way to the ``=/2" predicate: it succeeds when its two
+arguments do \LPNemph{not} unify.  For example, the terms ``a" and ``b"
 do not unify, which explains the following dialogue:
 \begin{LPNcodedisplay}
 ?- a \= b.
 yes
 \end{LPNcodedisplay}
 
-Make sure you understand how  "\=/2" works by trying it
+Make sure you understand how  ``\=/2" works by trying it
 out on (at least) the following examples.  But do this actively, not
 passively.  That is, after you type in an example, pause, and try to
 work out for yourself what Prolog is going to respond. Only then hit
 return to see if you are right.
 \begin{enumerate}
-\item{}"a \= a"
-\item{}"'a' \= a"
-\item{}"A \= a"
-\item{}"f(a) \= a"
-\item{}"f(a) \= A"
-\item{}"f(A) \= f(a)"
-\item{}"g(a,B,c) \= g(A,b,C)"
-\item{}"g(a,b,c) \= g(A,C)"
-\item{}"f(X) \= X"
+\item{}``a \= a"
+\item{}``'a' \= a"
+\item{}``A \= a"
+\item{}``f(a) \= a"
+\item{}``f(a) \= A"
+\item{}``f(A) \= f(a)"
+\item{}``g(a,B,c) \= g(A,b,C)"
+\item{}``g(a,b,c) \= g(A,C)"
+\item{}``f(X) \= X"
 \end{enumerate}
 
-Thus the "\=/2" predicate is (essentially) the negation of
-the "=/2" predicate: a query involving one of these predicates will be
+Thus the ``\=/2" predicate is (essentially) the negation of
+the ``=/2" predicate: a query involving one of these predicates will be
 satisfied when the corresponding query involving the other is not, and
 vice versa. This is the first example we have seen of a Prolog
 mechanism for handling negation.  We discuss Prolog negation (and its
 peculiarities) in Chapter~\ref{CHAPTER10}.
 
 It's time to move on and introduce one of the most helpful tools in
-Prolog: "trace".\index{PROLOG trace/0@\texttt{trace/0}} This is a built-in
+Prolog: ``trace".\index{PROLOG trace/0@\texttt{trace/0}} This is a built-in
 Prolog predicate that changes the
 way Prolog runs: it forces Prolog to evaluate queries one step at a
 time, indicating what it is doing at each step. Prolog waits for you
 to press return before it moves to the next step, so that you can see
 exactly what is going on. It was really designed to be used as a
 debugging tool, but it's also helpful when you're learning
-Prolog: stepping through programs using "trace" is an
+Prolog: stepping through programs using ``trace" is an
 \LPNemph{excellent} way of learning how Prolog proof search works.
 
 Let's look at an example.  In the text, we looked at the proof
-search involved when we made the query "k(Y)" to the following
+search involved when we made the query ``k(Y)" to the following
 knowledge base:
 \begin{LPNcodedisplay}
 f(a).
@@ -1107,22 +1106,22 @@ h(b).
 k(X):- f(X), g(X), h(X).
 \end{LPNcodedisplay}
 
-Suppose this knowledge base is in file "proof.pl". We first consult
+Suppose this knowledge base is in file ``proof.pl". We first consult
 it:
 \begin{LPNcodedisplay}
 ?- [proof].
 yes
 \end{LPNcodedisplay}
 %
-We then type "trace", followed by a full stop,  and hit return:
+We then type ``trace", followed by a full stop,  and hit return:
 \begin{LPNcodedisplay}
 ?- trace.
 yes
 \end{LPNcodedisplay}
 %
 Prolog is now in \LPNterm{trace mode}, and will evaluate all queries step by
-step.  For example, if we pose the query "k(X)", and then hit return
-every time Prolog comes back with a "?", we obtain (something like)
+step.  For example, if we pose the query ``k(X)", and then hit return
+every time Prolog comes back with a ``?", we obtain (something like)
 the following:
 \begin{LPNcodedisplay}
 [trace] 2 ?- k(X).
@@ -1150,9 +1149,9 @@ Study this carefully. That is, try doing the same thing yourself, and
 relate this output to the discussion of the example in the text, and
 in particular, to the nodes in the search tree.  To get you started,
 we'll remark that the third line is where the variable in the query is
-(wrongly) instantiated to "a". The first line marked "fail" is where
+(wrongly) instantiated to ``a". The first line marked ``fail" is where
 Prolog realises it's taken the wrong path and starts to backtrack, and
-the line marked "redo" is where it tries alternatives for the goal
+the line marked ``redo" is where it tries alternatives for the goal
 "f(\_G34)".
 
 \clearpage
