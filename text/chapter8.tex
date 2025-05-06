@@ -178,8 +178,8 @@ v --> [shoots].
 
 The key thing to note is that this new grammar contains only one new
 noun phrase rule.  In fact, it is very similar to the first grammar
-that we wrote, except that now the symbol "np" is associated with a
-new argument, either "subject", "object", "\_" or "X".  A
+that we wrote, except that now the symbol ``np" is associated with a
+new argument, either ``subject", ``object", ``\_" or ``X".  A
 linguist would say that we've added \LPNterm{features} to distinguish
 various kinds of noun phrase.  In particular, note the four rules for
 the pronouns. Here we've used the extra argument to state which
@@ -191,15 +191,15 @@ So what do the other rules do? Well, intuitively, the rule
 \begin{LPNcodedisplay}
 np(X) --> pro(X).
 \end{LPNcodedisplay}
-uses the extra argument (the variable "X") to pass these basic facts
+uses the extra argument (the variable ``X") to pass these basic facts
 about pronouns up to noun phrases built out of them: because the
-variable "X" is used as the extra argument for both the np and the
+variable ``X" is used as the extra argument for both the np and the
 pronoun, Prolog unification will guarantee that they will be given the
 same value. In particular, if the pronoun we use is ``she'' (in which
-case "X=subject"), then the np will (through its extra argument
+case ``X=subject"), then the np will (through its extra argument
 "X=subject") be marked as a subject np. On the other hand, if the
-pronoun we use is ``her'' (in which case "X=object"), then the extra
-argument for np will be marked "X=object" too. And this, of course, is
+pronoun we use is ``her'' (in which case ``X=object"), then the extra
+argument for np will be marked ``X=object" too. And this, of course, is
 exactly the behaviour we want.
 
 On the other hand, although noun phrases built using the rule
@@ -216,12 +216,12 @@ Now consider the rule
 vp --> v,np(object).
 \end{LPNcodedisplay}
 This says that to apply this rule we need to use a noun phrase whose
-extra argument unifies with "object".  This can be \LPNemph{either}
+extra argument unifies with ``object".  This can be \LPNemph{either}
 noun phrases built from object pronouns \LPNemph{or} noun phrases such as
 ``the man'' and ``a woman'' which have the anonymous variable as the
 value of the extra argument.  Crucially, pronouns marked has having
 "subject" as the value of the extra argument \LPNemph{can't} be used
-here: the atoms "object" and "subject" don't unify.  Note
+here: the atoms ``object" and ``subject" don't unify.  Note
 that the rule
 \begin{LPNcodedisplay}
 s --> np(subject),vp.
@@ -267,7 +267,7 @@ s(A,B) :-
 \end{LPNcodedisplay}
 
 As should now be clear, the name ``extra argument'' is a good one: as
-this translation makes clear, the "subject" symbol really
+this translation makes clear, the ``subject" symbol really
 \LPNemph{is} just one more argument in an ordinary Prolog rule.
 Similarly, our noun phrase DCG rules translate into
 \begin{LPNcodedisplay}
@@ -277,14 +277,14 @@ np(A,B,C) :-
 np(A,B,C) :-
     pro(A,B,C).
 \end{LPNcodedisplay}
-Note that both rules have \LPNemph{three} arguments.  The first, "A",
+Note that both rules have \LPNemph{three} arguments.  The first, ``A",
 is the extra argument, and the last two are the ordinary, hidden DCG
 arguments (the two hidden arguments are always the last two
 arguments).
 
 Incidentally, how do you think we would use the grammar to list the
 grammatical noun phrases?  Well, if we had been working with the DCG
-rule "np --> det,n" (that is, a rule with no extra arguments)
+rule ``np --> det,n" (that is, a rule with no extra arguments)
 we would have made the query
 \begin{LPNcodedisplay}
 ?- np(NP,[]).
@@ -353,14 +353,14 @@ pictures of trees, but we \LPNemph{can} build data structures which
 describe trees in a clear way.  For example, corresponding to the tree
 
 \begin{quote}
-  \pstree[levelsep=10mm,nodesep=2mm]{\TR{\texttt{s}}}
-    { \pstree[levelsep=10mm,nodesep=2mm]{\TR{\texttt{np}}}
-             {\pstree[levelsep=10mm,nodesep=2mm]{\TR{\texttt{det}}}
+  \pstree[levelsep=10mm,nodesep=2mm]{\TR{\texttt{S}}}
+    { \pstree[levelsep=10mm,nodesep=2mm]{\TR{\texttt{NP}}}
+             {\pstree[levelsep=10mm,nodesep=2mm]{\TR{\texttt{DET}}}
                      {\TR{\texttt{a}}}
-              \pstree[levelsep=10mm,nodesep=2mm]{\TR{\texttt{n}}}
+              \pstree[levelsep=10mm,nodesep=2mm]{\TR{\texttt{N}}}
                      {\TR{\texttt{woman}}}}
-      \pstree[levelsep=10mm,nodesep=2mm]{\TR{\texttt{vp}}}
-             {\pstree[levelsep=10mm,nodesep=2mm]{\TR{\texttt{v}}}
+      \pstree[levelsep=10mm,nodesep=2mm]{\TR{\texttt{VP}}}
+             {\pstree[levelsep=10mm,nodesep=2mm]{\TR{\texttt{V}}}
                      {\TR{\texttt{shoots}}}
              }}
 \end{quote}
@@ -399,14 +399,14 @@ v(v(shoots)) --> [shoots].
 What's going on here? Essentially we are building the parse trees for
 the syntactic categories on the left hand side of the rules out of the
 parse trees for the syntactic categories on the right hand side of the
-rules. Consider the rule "vp(vp(V,NP)) --> v(V),np(NP)".  When we make
-a query using this DCG, the "V" in "v(V)" and the "NP" in "np(NP)"
+rules. Consider the rule ``vp(vp(V,NP)) --$>$ v(V),np(NP)".  When we make
+a query using this DCG, the ``V" in ``v(V)" and the ``NP" in ``np(NP)"
 will be instantiated to terms representing parse trees. For example,
-perhaps "V" will be instantiated to
+perhaps ``V" will be instantiated to
 \begin{LPNcodedisplay}
 v(shoots)
 \end{LPNcodedisplay}
-and "NP" will be instantiated to
+and ``NP" will be instantiated to
 \begin{LPNcodedisplay}
 np(det(a),n(woman)).
 \end{LPNcodedisplay}
@@ -415,17 +415,17 @@ two structures? Obviously it should be this:
 \begin{LPNcodedisplay}
 vp(v(shoots),np(det(a),n(woman))).
 \end{LPNcodedisplay}
-And this is precisely what the extra argument "vp(V,NP)" given in the
-rule "vp(vp(V,NP)) -->" "v(V),np(NP)" returns to us:  a term
-whose functor is "vp", and whose first and second arguments are the
-values of "V" and "NP" respectively. To put it informally: it plugs
-the "V" and the "NP" terms together under a "vp" functor.
+And this is precisely what the extra argument ``vp(V,NP)" given in the
+rule ``vp(vp(V,NP)) -->" ``v(V),np(NP)" returns to us:  a term
+whose functor is ``vp", and whose first and second arguments are the
+values of ``V" and ``NP" respectively. To put it informally: it plugs
+the ``V" and the ``NP" terms together under a ``vp" functor.
 
 To parse the sentence ``A woman shoots'' we pose the query:
 \begin{LPNcodedisplay}
 ?- s(T,[a,woman,shoots],[]).
 \end{LPNcodedisplay}
-That is, we ask for the extra argument "T" to be instantiated
+That is, we ask for the extra argument ``T" to be instantiated
 to a parse tree for the sentence.  And we get:
 \begin{LPNcodedisplay}
 T = s(np(det(a),n(woman)),vp(v(shoots)))
@@ -467,8 +467,8 @@ meaning of each word is expressed in the formal language; this meaning
 is given as an extra argument in the DCG entries for the individual
 words.  Then, for each rule in the grammar, an extra argument shows
 how to combine the meaning of the two subcomponents.  For example, to
-the rule "s --> np, vp" we would add an extra argument stating how to
-combine the "np" meaning and the "vp" meaning to form the "s" meaning.
+the rule ``s --> np, vp" we would add an extra argument stating how to
+combine the ``np" meaning and the ``vp" meaning to form the ``s" meaning.
 Although somewhat more complex, the semantic construction process is
 quite like the way we built up the parse tree for the sentence from
 the parse tree of its subparts.%
@@ -493,10 +493,10 @@ whatsoever. We shall illustrate this by presenting a simple DCG for the
 formal language $a^nb^nc^n \backslash \{ \epsilon \}$.
 
 The formal language $a^nb^nc^n \backslash \{ \epsilon \}$  consists
-of all non-null strings made up of "a"s, "b"s, and "c"s which consist
-of an unbroken block of "a"s, followed by an unbroken block of "b"s,
-followed by an unbroken block of "c"s, all three blocks having the
-same length. For example, "abc", and "aabbcc" and "aaabbbccc" all
+of all non-null strings made up of ``a"s, ``b"s, and ``c"s which consist
+of an unbroken block of ``a"s, followed by an unbroken block of ``b"s,
+followed by an unbroken block of ``c"s, all three blocks having the
+same length. For example, ``abc", and ``aabbcc" and ``aaabbbccc" all
 belong to
 $a^nb^nc^n \backslash \{ \epsilon \}$.
 
@@ -510,7 +510,7 @@ theory.
  On the other hand, as we shall now see, it is very easy to write a
 DCG that generates this language. Just as we did in the previous
 chapter, we shall represent strings as lists; for example, the string
-"abc" will be represented using the list "[a,b,c]". Given this
+"abc" will be represented using the list ``[a,b,c]". Given this
 convention, here's the DCG we need:
 \begin{LPNcodedisplay}
 s(Count) --> ablock(Count),bblock(Count),cblock(Count).
@@ -527,19 +527,19 @@ cblock(succ(Count)) --> [c],cblock(Count).
 
 
 The idea underlying this DCG is fairly simple: we use an extra
-argument to keep track of the length of the blocks. The "s" rule
-simply says that we want a block of "a"s followed by a block of
-"b"s followed by block of "c"s, and all three blocks are to
-have the same length, namely "Count".
+argument to keep track of the length of the blocks. The ``s" rule
+simply says that we want a block of ``a"s followed by a block of
+"b"s followed by block of ``c"s, and all three blocks are to
+have the same length, namely ``Count".
 
-What should the values of "Count" be? The obvious answer is: "1", "2",
-"3", "4", and so on.  But as yet we don't know how to mix DCGs and
+What should the values of ``Count" be? The obvious answer is: ``1", ``2",
+``3", ``4", and so on.  But as yet we don't know how to mix DCGs and
 arithmetic, so this isn't very helpful. Fortunately, as this DCG
 shows, there's an easier (and more elegant) way. Represent the
-number 0 by "0", the number 1 by "succ(0)", the number 2 by
-"succ(succ(0))", the number 3 by "succ(succ(succ(0)))", and so on,
+number 0 by ``0", the number 1 by ``succ(0)", the number 2 by
+``succ(succ(0))", the number 3 by ``succ(succ(succ(0)))", and so on,
 just as we did it in Chapter~3 (as we said in Chapter~3, you can read
-"succ" as ``successor of'').  This choice of notation
+``succ" as ``successor of'').  This choice of notation
 enables us to count using unification.
 
 And this is precisely what our new  DCG does.
@@ -547,8 +547,8 @@ For example, suppose we pose the following query:
 \begin{LPNcodedisplay}
 ?- s(Count,L,[]).
 \end{LPNcodedisplay}
-which asks Prolog to generate the lists "L" of symbols that
-belong to this language, and to give the value of "Count" needed
+which asks Prolog to generate the lists ``L" of symbols that
+belong to this language, and to give the value of ``Count" needed
 to produce each item. Then the first four responses are:
 \begin{LPNcodedisplay}
 Count = 0
@@ -564,7 +564,7 @@ Count = succ(succ(succ(0)))
 L = [a, a, a, b, b, b, c, c, c]
 \end{LPNcodedisplay}
 
-The value of "Count" clearly corresponds to the
+The value of ``Count" clearly corresponds to the
 length of the blocks.
 
  So: DCGs are not just a tool for working with context free
@@ -585,7 +585,7 @@ right hand side of a DCG rule.
 The DCG of the previous section can, for example, be adapted to work
 with Prolog numbers (instead of the successor representation of
 numbers) by using calls to Prolog's built-in arithmetic
-functionality. We simply count how many "a"s, "b"s, and "c"s have been
+functionality. We simply count how many ``a"s, ``b"s, and ``c"s have been
 generated. Here's the code:
 \begin{LPNcodedisplay}
 s --> ablock(Count),bblock(Count),cblock(Count).
@@ -608,7 +608,7 @@ right side of a DCG rule, but must be placed between curly
 brackets. When Prolog encounters such curly brackets while translating
 a DCG into its internal representation, it just takes the extra goals
 specified between the curly brackets over into the translation. So,
-the second rule for the non-terminal "ablock" above would be
+the second rule for the non-terminal ``ablock" above would be
 translated as follows:
 \begin{LPNcodedisplay}
 ablock(NewCount,A,B):-
@@ -623,7 +623,7 @@ there are actually some problems with it. In contrast to the one that
 we saw in the last section, this new version only works correctly when
 used in the recognition mode. If you try to generate with it, it will
 at some point enter an infinite loop. We won't bother to fix this
-problem here (apart from anything else, we find the earlier "succ"
+problem here (apart from anything else, we find the earlier ``succ"
 based approach more elegant).
 
 The possibility of adding arbitrary Prolog goals to the right hand
@@ -664,7 +664,7 @@ separately.
 
 
 Here is an example of a (very simple) lexicon. Lexical entries are
-encoded by using a predicate "lex/2" whose first argument is a
+encoded by using a predicate ``lex/2" whose first argument is a
 word, and whose second argument is a syntactic category.
 \begin{LPNcodedisplay}
 lex(the,det).
@@ -677,7 +677,7 @@ lex(shoots,v).
 And here is a simple grammar that could go with this lexicon.  In
 essence it's the same as the previous one.  In fact, the only rules
 that have changed are those that mentioned specific words, that is,
-the "det", "n", and "v" rules.
+the ``det", ``n", and ``v" rules.
 \begin{LPNcodedisplay}
 np --> det,n.
 
@@ -689,14 +689,14 @@ n --> [Word],{lex(Word,n)}.
 v --> [Word],{lex(Word,v)}.
 \end{LPNcodedisplay}
 
-Consider the new "det" rule. This rule part says ``a "det"
-can consist of a list containing a single element "Word"'' (note
-that "Word" is a variable). Then the extra goal adds the crucial
-stipulation: ``so long as "Word" unifies  with something that is
+Consider the new ``det" rule. This rule part says ``a ``det"
+can consist of a list containing a single element ``Word"'' (note
+that ``Word" is a variable). Then the extra goal adds the crucial
+stipulation: ``so long as ``Word" unifies  with something that is
 listed in the lexicon as a determiner''.  With our present lexicon,
-this means that "Word" must be matched either with the word ``a''
+this means that ``Word" must be matched either with the word ``a''
 or ``the''.  So this single rule replaces the two previous DCG rules
-for "det".
+for ``det".
 
 This explains the ``how'' of separating rules from lexicon, but it
 doesn't explain the ``why''. Is it really so important? Is this new
@@ -709,8 +709,8 @@ The first reason is theoretical. Arguably rules should not mention
 specific lexical items. The purpose of rules is to list
 \LPNemph{general} syntactic facts, such as the fact that sentence can
 be made up of a noun phrase followed by a verb phrase. The rules for
-"s", "np", and "vp" describe such general syntactic facts, but the old
-rules for "det", "n", and "v" don't. Instead, the old rules simply
+``s", ``np", and ``vp" describe such general syntactic facts, but the old
+rules for ``det", ``n", and ``v" don't. Instead, the old rules simply
 list particular facts: that ``a'' is a determiner, that ``the'' is a
 determiner, and so on.  From theoretical perspective it is much neater
 to have a single rule that says ``anything is a determiner (or a noun,
@@ -725,11 +725,11 @@ expensive!) repository of linguistic knowledge. Bluntly, if you want
 to get to grips with natural language from a computational perspective,
 you need to know a lot of words, and you need to know a lot about them.
 
- Now, our little lexicon, with its simple two-place "lex" entries, is
+ Now, our little lexicon, with its simple two-place ``lex" entries, is
 a toy. But a real lexicon is (most emphatically!) not. A real lexicon
 is likely to be very large (it may contain hundreds of thousands of
 words) and moreover, the information associated with each word is
-likely to be very rich.  Our "lex" entries give only the syntactical
+likely to be very rich.  Our ``lex" entries give only the syntactical
 category of each word, but a real lexicon will give much more, such as
 information about its phonological, morphological, semantic, and
 pragmatic properties.
@@ -753,7 +753,7 @@ making Prolog's knowledge base access more efficient. If in the query
 the first argument is instantiated it allows Prolog to ignore all
 clauses where the first argument's functor and arity is
 different. This means, for example, that we can get all the possible
-categories of "man" immediately without having to even look at the
+categories of ``man" immediately without having to even look at the
 lexicon entries for all the other hundreds or thousands of words that
 we might have in our lexicon.
 
@@ -797,7 +797,7 @@ to the DCG notation. Any of you who have studied parsing algorithms
 probably know that all top-down parsers loop on left-recursive
 grammars. So, it is not surprising that Prolog, which interprets DCGs
 in a top-down fashion, loops on the left-recursive grammar rule
-"s --> s conj s". If we used a different strategy to interpret DCGs, for
+``s --> s conj s". If we used a different strategy to interpret DCGs, for
 example a bottom-up strategy, we would not run into the same
 problem. Similarly, if we didn't use Prolog's built-in interpretation
 of DCGs, we could use the extra arguments for a more sophisticated
@@ -871,36 +871,36 @@ The purpose of Practical Session 8 is to help you get familiar with
 DCGs that make use of additional arguments and goals.
 
 First some keyboard exercises:
-\begin{enumerate}
-\item{}Trace some examples using the DCG which uses extra arguments to
+
+1. Trace some examples using the DCG which uses extra arguments to
 handle the subject/object distinction, the DCG which produces parses, and
 the DCG which uses extra goals to separate lexicon and rules. Make sure
 you fully understand the way all three DCGs work.
 
-\item{}Carry out traces on the DCG for $a^nb^nc^n$ given in the text
-(the one that gave the "Count" variable the values "0", "succ(0)",
-"succ(succ(0))", and so on). Try cases where the three blocks of "a"s,
-"b"s, and "c"s are indeed of the same length as well as queries where
+2. Carry out traces on the DCG for $a^nb^nc^n$ given in the text
+(the one that gave the ``Count" variable the values ``0", ``succ(0)",
+``succ(succ(0))", and so on). Try cases where the three blocks of ``a"s,
+``b"s, and ``c"s are indeed of the same length as well as queries where
 this is not the case.
-\end{enumerate}
 
 Now for some programming. We suggest the following mini-project, which
 draws on all you have learned so far. Incidentally, in the Practical
 Session at the end of Chapter~12 we will be asking to extend this work
 even further, so do take this project seriously.
-\begin{enumerate}
-\item{}First, bring together all the things we have learned about DCGs
+
+1. First, bring together all the things we have learned about DCGs
 for English into one DCG. In particular, in the text we saw how to use
 extra arguments to deal with the subject/object distinction, and in
 the exercises you were asked to use additional arguments to deal with
 the singular/plural distinction. Write a DCG which handles
 both. Moreover, write the DCG in such a way that it will produce parse
 trees, and makes use of a separate lexicon.
-\item{}Once you have done this, extend the DCG so that noun phrases can
+
+2. Once you have done this, extend the DCG so that noun phrases can
 be modified by adjectives and simple prepositional phrases (that is,
 it should be able to handle noun phrases such as ``the small
 frightened woman on the table'' or ``the big fat cow under the
 shower''). Then, further extend it so that the distinction between
 first, second, and third person pronouns is correctly handled (both in
 subject and object form).
-\end{enumerate}
+
