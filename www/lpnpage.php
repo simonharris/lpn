@@ -1,13 +1,13 @@
-<?php
+  <?php
 
 	$nospam_pagetype = array("html", "website");
 
-	if (isset($_GET["pagetype"]) 
-	    && in_array($_GET["pagetype"], $nospam_pagetype)) 
+	if (isset($_GET["pagetype"])
+	    && in_array($_GET["pagetype"], $nospam_pagetype))
 	{
 		$pagetype = $_GET["pagetype"];
 	}
-	else {			
+	else {
 		$pagetype = "website";
 	}
 
@@ -33,8 +33,12 @@
   <head>
 
   <title>Learn Prolog Now!</title>
-
+  <link href="https://lpn.swi-prolog.org/jquery-ui.min.css" rel="stylesheet">
+    <script src="https://lpn.swi-prolog.org/jquery.min.js"></script>
+    <script src="https://lpn.swi-prolog.org/jquery-ui.min.js"></script>
+    <script src="https://lpn.swi-prolog.org/lpn.js?<?=time() ?>"></script>
   <link href="lpn_reds2.css" rel="stylesheet" type="text/css">
+  <link href="https://lpn.swi-prolog.org/lpn.css" rel="stylesheet" type="text/css">
 
   </head>
 
@@ -45,15 +49,43 @@
   <tr><td><div style="width:500pt;"></div></td></tr>
   <tr><td>
 
-  <div class="coloredbar"></div>
+  <div class="coloredbar">
+
+
+  <div class="swish-disclaimer">
+This version of Learn Prolog Now! embeds <a href="https://swish.swi-prolog.org">
+<span style="color:darkblue">SWI</span><span style="color:maroon">SH</span></a>,
+<a href="https://www.swi-prolog.org">SWI-Prolog</a> for SHaring.
+The current version rewrites the Learn Prolog Now! HTML on the fly, recognising
+source code and example queries.  It is not yet good at recognising the relations
+between source code fragments and queries.  Also Learn Prolog Now! needs some
+updating to be more compatible with SWI-Prolog.  All sources are on GitHub:
+
+<div class="github">
+<span>LearnPrologNow</span>
+
+<iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=LearnPrologNow&amp;repo=lpn&amp;type=fork&amp;count=true" width="102" height="20" title="Fork on GitHub"></iframe>
+
+<span>LPN SWISH Proxy</span>
+
+<iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=LearnPrologNow&amp;repo=lpn-swish-proxy&amp;type=fork&amp;count=true" width="102" height="20" title="Fork on GitHub"></iframe>
+
+<span>SWISH</span>
+
+<iframe class="github-btn" src="https://ghbtns.com/github-btn.html?user=SWI-Prolog&amp;repo=swish&amp;type=fork&amp;count=true" width="102" height="20" title="Fork on GitHub"></iframe>
+</div>
+</div>
+
+
+  </div>
   <div class="lpnheader">
   <a href="index.php">Learn Prolog Now!</a>
   </div>
 
-  
+
   <div class="authorbar">
-  by <a href="http://www.loria.fr/~blackbur/">Patrick Blackburn</a>, 
-     <a href="http://www.let.rug.nl/bos/">Johan Bos</a>, and 
+  by <a href="http://www.loria.fr/~blackbur/">Patrick Blackburn</a>,
+     <a href="http://www.let.rug.nl/bos/">Johan Bos</a>, and
      <a href="http://cs.union.edu/~striegnk/">Kristina Striegnitz</a>
   </div>
 
@@ -61,7 +93,7 @@
   <div class="navbar">
   <?php
 
-	include "navbar.php";	
+	include "navbar.php";
 
 	make_navmenu($pageid);
   ?>
@@ -74,7 +106,7 @@
   <?php
 	if ($pagetype == "website")
 	    include $pageid.".php";
-	else	
+	else
   	    include "html/".$pageid.".html";
   ?>
 
@@ -107,6 +139,13 @@ src="http://e2.extreme-dm.com/s11.g?login=lpntwo&amp;j=n&amp;jv=n" />
 
   </td></tr></table>
 
+<script>
+
+$(function() {
+  $(".swish").LPN({ swish:"https://swish.swi-prolog.org/" });
+});
+
+</script>
 
   </body>
 
